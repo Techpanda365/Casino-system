@@ -1,0 +1,42 @@
+const mongoose = require('mongoose');
+
+const SiteSettingSchema = new mongoose.Schema({
+  adminId: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true, unique: true },
+  siteName: { type: String, default: 'LUCKY BAZAR' },
+  logo: { type: String, default: '' },
+  favicon: { type: String, default: '' },
+  header: { type: String, default: '' },
+  footer: { type: String, default: '' },
+  welcomeText: { type: String, default: 'Welcome to Lucky Bazar !! Satta Matka Fast Result' },
+  luckyNumber: { type: String, default: '' },
+  goldenAnk: { type: String, default: '' },
+  whatsappNumber: { type: String, default: '' },
+  email: { type: String, default: '' },
+  telegramChannel: { type: String, default: '' },
+  aboutUs: { type: String, default: '' },
+  appDownloadUrl: { type: String, default: '' },
+  // Theme
+  themeBg: { type: String, default: '#0a0a14' },
+  themeCardBg: { type: String, default: 'rgba(255,255,255,0.03)' },
+  themeBorder: { type: String, default: 'rgba(255,255,255,0.12)' },
+  themePrimary: { type: String, default: '#f59e0b' },
+  themePrimaryDark: { type: String, default: '#d97706' },
+  themeText: { type: String, default: '#ffffff' },
+  themeTextMuted: { type: String, default: '#94a3b8' },
+  themeHeaderBg: { type: String, default: 'linear-gradient(to right, #d97706, #f59e0b)' },
+  themeSectionBg: { type: String, default: 'linear-gradient(to right, rgba(245,158,11,0.2), rgba(245,158,11,0.05))' },
+  themeResultBg: { type: String, default: '#f59e0b' },
+  themeResultText: { type: String, default: '#000000' },
+  themeSectionText: { type: String, default: '#f59e0b' },
+  themeCardRadius: { type: String, default: '0.5rem' },
+  themeHoverBg: { type: String, default: 'rgba(255,255,255,0.08)' },
+  themeShadow: { type: String, default: 'rgba(245,158,11,0.2)' },
+  themeFont: { type: String, default: 'inherit' },
+  addMarketEnabled: { type: Boolean, default: false },
+  addMarketTitle: { type: String, default: 'Add Your Market' },
+  addMarketContent: { type: String, default: 'Contact us to add your market.' },
+  addMarketWhatsapp: { type: String, default: '' },
+  addMarketEmail: { type: String, default: '' }
+}, { timestamps: true });
+
+module.exports = mongoose.model('SiteSetting', SiteSettingSchema);
