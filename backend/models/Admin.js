@@ -6,7 +6,8 @@ const AdminSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, enum: ['superadmin', 'admin'], default: 'admin' },
   subscriptionStatus: { type: Boolean, default: false },
-  siteSlug: { type: String, unique: true, sparse: true }
+  siteSlug: { type: String, unique: true, sparse: true },
+  avatar: { type: String, default: '' }
 });
 
 module.exports = mongoose.model('Admin', AdminSchema);

@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     );
     console.log(token,"token")
 
-   return res.json({
+    return res.json({
       token,
       admin: {
         id: admin._id,
@@ -49,6 +49,7 @@ router.post("/login", async (req, res) => {
         email: admin.email,
         subscriptionStatus: admin.subscriptionStatus,
         siteSlug: admin.siteSlug,
+        avatar: admin.avatar || '',
       },
     });
   } catch (error) {
@@ -163,6 +164,34 @@ router.put("/site-slug/:id", auth, isSuperAdmin, async (req, res) => {
     // return res.json({ msg: "Site URL updated", admin });
   } catch (error) {
     return res.status(500).json({ msg: "Server error", error: error.message });
+  }
+});
+
+// GET profile (own)
+router.get("/profile", auth, async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.admin.id).select("-password");
+    if (!admin) return res.status(404).json({ msg: "Admin not found" });
+    res.json(admin);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error", error: error.message });
+  }
+});
+
+// PUT profile (own)
+router.put("/profile", auth, async (req, res) => {
+  try {
+    const { name, email, avatar } = req.body;
+    const updates = {};
+    if (name !== undefined) updates.name = name;
+    if (email !== undefined) updates.email = email;
+    if (avatar !== undefined) updates.avatar = avatar;
+
+    const admin = await Admin.findByIdAndUpdate(req.admin.id, updates, { new: true }).select("-password");
+    if (!admin) return res.status(404).json({ msg: "Admin not found" });
+    res.json({ msg: "Profile updated", admin });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error", error: error.message });
   }
 });
 
