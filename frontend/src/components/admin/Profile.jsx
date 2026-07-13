@@ -20,6 +20,7 @@ function Profile({ token }) {
         setName(r.data.name || '');
         setEmail(r.data.email || '');
         setAvatar(r.data.avatar || '');
+        localStorage.setItem('adminAvatar', r.data.avatar || '');
       })
       .catch(() => toast.error('Failed to load profile'));
   }, [token]);
@@ -34,6 +35,7 @@ function Profile({ token }) {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       setAvatar(res.data.url);
+      localStorage.setItem('adminAvatar', res.data.url);
       toast.success('Photo uploaded');
     } catch { toast.error('Upload failed'); }
     finally { setUploading(false); }
@@ -48,6 +50,7 @@ function Profile({ token }) {
       });
       setProfile(res.data.admin);
       localStorage.setItem('adminName', res.data.admin.name);
+      localStorage.setItem('adminAvatar', res.data.admin.avatar || '');
       toast.dismiss(loading);
       toast.success('Profile updated successfully!');
     } catch (err) {

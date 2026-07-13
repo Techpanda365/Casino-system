@@ -683,12 +683,12 @@ function PublicWebsite() {
           style={{ boxShadow: '0 0 60px rgba(245,158,11,0.15)' }}
         >
           {/* Header */}
-          <div className="sticky top-0 bg-gradient-to-r from-amber-600/20 to-amber-500/20 border-b border-amber-500/20 px-6 py-4 flex justify-between items-center backdrop-blur-sm">
-            <div>
-              <h2 className="text-lg font-bold text-amber-400 flex items-center gap-2">
+          <div className="sticky top-0 bg-gradient-to-r from-amber-600/20 to-amber-500/20 border-b border-amber-500/20 px-4 sm:px-6 py-4 flex justify-between items-center gap-2 backdrop-blur-sm min-w-0">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg font-bold text-amber-400 flex items-center gap-2 truncate">
                 💎 PREMIUM SERVICES ZONE 💎
               </h2>
-              <p className="text-slate-400 text-xs mt-1">Unlock Exclusive Matka Features</p>
+              <p className="text-slate-400 text-xs mt-1 truncate">Unlock Exclusive Matka Features</p>
             </div>
             <button 
               onClick={() => setShowVipModal(false)}
@@ -721,12 +721,12 @@ function PublicWebsite() {
           </div>
 
           {/* Footer */}
-          <div className="border-t border-white/[0.08] px-6 py-4 bg-black/20">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-500 text-xs">🔒 Premium Access • 24/7 Support</span>
+          <div className="border-t border-white/[0.08] px-4 sm:px-6 py-4 bg-black/20">
+            <div className="flex items-center justify-between gap-2 min-w-0">
+              <span className="text-slate-500 text-xs truncate min-w-0">🔒 Premium Access • 24/7 Support</span>
               <button 
                 onClick={() => setShowVipModal(false)}
-                className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-2 rounded-lg text-sm font-bold hover:from-amber-500 hover:to-amber-400 transition shadow-lg shadow-amber-500/20"
+                className="shrink-0 bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4 sm:px-6 py-2 rounded-lg text-sm font-bold hover:from-amber-500 hover:to-amber-400 transition shadow-lg shadow-amber-500/20"
               >
                 Close
               </button>
@@ -828,11 +828,11 @@ function PublicWebsite() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center gap-3">
-            {settings.logo && <img src={settings.logo} alt="" className="h-10 w-auto" />}
-            <div>
-              <h1 className="text-lg font-bold tracking-wide text-white">{settings.siteName || 'Lucky Bazar'}</h1>
-              <p className="text-xs font-medium text-white/60 uppercase tracking-widest">{settings.siteName || 'Lucky Bazar'} • FAST RESULT • FREE GAME</p>
+          <div className="flex items-center gap-3 min-w-0">
+            {settings.logo && <img src={settings.logo} alt="" className="h-10 w-auto shrink-0" />}
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg font-bold tracking-wide text-white truncate">{settings.siteName || 'Lucky Bazar'}</h1>
+              <p className="text-xs font-medium text-white/60 uppercase tracking-widest truncate">{settings.siteName || 'Lucky Bazar'} • FAST RESULT • FREE GAME</p>
             </div>
           </div>
         </div>
@@ -895,13 +895,14 @@ function PublicWebsite() {
         const hasGolden = !!settings.goldenAnk;
         const hasFinal = finalAnkMarkets.length > 0;
         const cols = (hasLucky ? 1 : 0) + (hasGolden ? 1 : 0) + (hasFinal ? 1 : 0);
+        const colsMap = { 1: 'md:grid-cols-1', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' };
         return (
           <div className="max-w-7xl mx-auto px-4 mt-4">
             <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl overflow-hidden">
               <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-1.5 text-center">
                 <span className="text-amber-400 font-bold text-xs uppercase tracking-widest">Today Lucky Number</span>
               </div>
-              <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${cols} divide-x divide-white/[0.12]`}>
+              <div className={`grid grid-cols-1 sm:grid-cols-2 ${colsMap[cols] || 'md:grid-cols-1'} divide-x divide-white/[0.12]`}>
                 {hasLucky && (
                   <div className="py-4 text-center">
                     <div className="text-slate-500 text-xs uppercase tracking-widest mb-1">Today Lucky Number</div>
@@ -936,7 +937,7 @@ function PublicWebsite() {
       <LiveTicker results={liveResults} onRefresh={handleRefresh} refreshing={refreshing} />
 
       <div className="max-w-7xl mx-auto px-4 mt-4">
-        <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl p-4 space-y-2 text-sm text-white/80 leading-relaxed">
+        <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl px-3 py-3 sm:p-4 space-y-2 text-sm text-white/80 leading-relaxed">
           <p>🔥 बुकी-खाईवाल भाइयों के लिए बड़ी खबर!</p>
           <p>📈 किसी भी कंपनी या मार्केट में डायरेक्ट खाता खुलवाने, कंपनी को कटिंग देने और बिना किसी टेंशन के व्यापार शुरू करने की पूरी सुविधा हमारे द्वारा दी जाएगी।</p>
           <p>🚀 हमारी World Famous साइट पर अपना बाज़ार शुरू करवाने के लिए नीचे दिया गया चैनल जॉइन करें।</p>
@@ -959,7 +960,7 @@ function PublicWebsite() {
           >
             📥 Download App
           </a>
-          <div className="pt-3 border-t border-white/[0.08] text-xs text-slate-300 font-bold leading-loose tracking-wide px-2">
+          <div className="pt-3 border-t border-white/[0.08] text-xs text-slate-300 font-bold leading-loose tracking-wide px-2 break-words">
             KALYAN MATKA | MATKA RESULT | KALYAN MATKA TIPS | SATTA MATKA | MATKA.COM | MATKA PANA JODI TODAY | BATTA SATKA | MATKA PATTI JODI NUMBER | MATKA RESULTS | MATKA CHART | MATKA JODI | SATTA COM | FULL RATE GAME | MATKA GAME | MATKA WAPKA | ALL MATKA RESULT LIVE ONLINE | MATKA RESULT | KALYAN MATKA RESULT | LUCKY BAZAR MATKA 143 | MAIN MATKA
           </div>
         </div>
@@ -1007,7 +1008,7 @@ function PublicWebsite() {
                     Panel
                   </button>
                 </div>
-                <div className="text-center px-16">
+                <div className="text-center px-10 sm:px-16">
                   <div className={`text-sm font-bold ${
                     m.result ? 'text-black' : 'text-amber-400/80'
                   }`}>
@@ -1015,7 +1016,7 @@ function PublicWebsite() {
                   </div>
                   {m.result ? (
                     <>
-                      <div className="text-lg font-mono font-bold tracking-wider text-black mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
+                      <div className="text-sm sm:text-lg font-mono font-bold tracking-wider text-black mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
                         {m.result.openPatti}<span className="text-black/40">-</span>{m.result.jodi}<span className="text-black/40">-</span>{m.result.closePatti}
                       </div>
                       <div className="text-[11px] text-black/60 mt-0.5">{m.openTime} — {m.closeTime}</div>
@@ -1048,10 +1049,10 @@ function PublicWebsite() {
           return (
             <>
               <div className="max-w-7xl mx-auto px-4 mt-4">
-                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center justify-between">
-                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">MAIN BOMBAY 36 BAZAR</span>
+                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center justify-between gap-2 min-w-0">
+                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider truncate min-w-0">MAIN BOMBAY 36 BAZAR</span>
                   <Link to={`/site/${slug}/main-bombay-chart`}
-                    className="bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition">Chart</Link>
+                    className="shrink-0 bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition">Chart</Link>
                 </div>
                 <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
                   <div className="text-4xl font-mono font-bold text-amber-400">{result}</div>

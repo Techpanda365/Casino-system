@@ -47,7 +47,7 @@ function CasinoSpinner({ onResult }) {
   return (
     <div className="bg-gradient-to-br from-emerald-900 via-green-800 to-emerald-900 p-6 rounded-2xl border-2 border-amber-400/30 shadow-2xl">
       {/* Spinner Wheel */}
-      <div className="relative w-48 h-48 mx-auto mb-4">
+      <div className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-4">
         <div className="absolute inset-0 rounded-full border-4 border-amber-400/30 shadow-lg shadow-amber-500/20">
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-900/50 to-amber-700/50 flex items-center justify-center">
             <span className="text-6xl font-bold text-amber-400 drop-shadow-lg glow">

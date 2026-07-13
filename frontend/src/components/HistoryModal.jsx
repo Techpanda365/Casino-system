@@ -27,12 +27,12 @@ function HistoryModal({ slug, marketId, marketName, type, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-600/30 to-amber-500/10 border-b border-amber-500/25 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
-          <div>
-            <h2 className="text-amber-400 font-bold text-sm uppercase tracking-widest">
+        <div className="bg-gradient-to-r from-amber-600/30 to-amber-500/10 border-b border-amber-500/25 px-4 py-3 flex items-center justify-between gap-2 sticky top-0 z-10 min-w-0">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-amber-400 font-bold text-sm uppercase tracking-widest truncate">
               {marketName}
             </h2>
-            <p className="text-slate-500 text-xs mt-0.5">
+            <p className="text-slate-500 text-xs mt-0.5 truncate">
               {type === 'jodi'
                 ? 'Jodi Chart Record (Historical)'
                 : 'Panel Chart Record (Historical)'}
@@ -40,15 +40,15 @@ function HistoryModal({ slug, marketId, marketName, type, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-white transition text-xl leading-none w-7 h-7 flex items-center justify-center rounded border border-white/[0.1] hover:border-white/20"
+            className="shrink-0 text-slate-500 hover:text-white transition text-xl leading-none w-7 h-7 flex items-center justify-center rounded border border-white/[0.1] hover:border-white/20"
           >
             ✕
           </button>
         </div>
 
         {/* Sub-header label */}
-        <div className="bg-amber-500/10 border-b border-amber-500/15 px-4 py-1.5 text-center">
-          <span className="text-amber-400 text-xs font-bold uppercase tracking-widest">
+        <div className="bg-amber-500/10 border-b border-amber-500/15 px-4 py-1.5 text-center overflow-hidden">
+          <span className="text-amber-400 text-xs font-bold uppercase tracking-widest truncate block">
             {marketName} {type === 'jodi' ? 'Jodi' : 'Panel'} Result Chart Records
           </span>
         </div>

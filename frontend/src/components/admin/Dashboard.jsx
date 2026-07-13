@@ -163,6 +163,15 @@ const navItems = [
         <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"/>
       </svg>
     )
+  },
+  {
+    path: '/admin/profile',
+    label: 'Edit Profile',
+    icon: (
+      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+      </svg>
+    )
   }
 ];
 
@@ -172,6 +181,7 @@ function Dashboard({ token, role, setToken, setRole }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const siteSlug = localStorage.getItem('siteSlug') || '';
   const adminName = localStorage.getItem('adminName') || '';
+  const adminAvatar = localStorage.getItem('adminAvatar') || '';
 
   const logout = () => {
     localStorage.clear();
@@ -285,8 +295,12 @@ function Dashboard({ token, role, setToken, setRole }) {
               <Link to="/admin/profile"
                 className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-lg hover:bg-slate-700 transition group"
               >
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-[10px] font-bold text-white">
-                  {(adminName || role)[0].toUpperCase()}
+                <div className="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-[10px] font-bold text-white">
+                  {adminAvatar ? (
+                    <img src={adminAvatar} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    (adminName || role)[0].toUpperCase()
+                  )}
                 </div>
                 <span className="text-xs text-slate-300 group-hover:text-white transition">{adminName || role}</span>
               </Link>

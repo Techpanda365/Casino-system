@@ -15,7 +15,8 @@ function StarlineChartsDisplay({ charts }) {
               </div>
               <div className="p-3">
                 {c.data && c.data.length > 0 ? (
-                  <table className="w-full text-xs text-center">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-center min-w-[320px]">
                     <thead>
                       <tr className="text-slate-500 border-b border-white/[0.08]">
                         <th className="py-1.5 font-medium">Time</th>
@@ -43,6 +44,7 @@ function StarlineChartsDisplay({ charts }) {
                       })()}
                     </tbody>
                   </table>
+                  </div>
                 ) : (
                   <div className="text-slate-400 text-xs font-mono leading-relaxed whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: c.content }} />
                 )}
