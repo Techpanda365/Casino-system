@@ -77,6 +77,7 @@ const apiRoutes = require('./routes/apiRoutes');
 const starlineChartRoutes = require('./routes/starlineChartRoutes');
 const bannerRoutes = require('./routes/bannerRoutes');
 const forumRoutes = require('./routes/forumRoutes');
+const mainBombayRoutes = require('./routes/mainBombayRoutes');
 
 app.use('/api/admin', adminRoutes);
 app.use('/api/subscription', subscriptionRoutes);
@@ -92,6 +93,7 @@ app.use('/api/v1', apiRoutes);
 app.use('/api/starline-charts', starlineChartRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/forums', forumRoutes);
+app.use('/api/main-bombay', mainBombayRoutes);
 
 app.get('/', (req, res) => {
   res.send('🚀 Server is running with MongoDB Atlas!');

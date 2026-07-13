@@ -8,6 +8,7 @@ const Chart = require("../models/Chart");
 const Starline = require("../models/Starline");
 const PassHua = require("../models/PassHua");
 const StarlineChart = require("../models/StarlineChart");
+const MainBombay36 = require("../models/MainBombay36");
 const Banner = require("../models/Banner");
 const Forum = require("../models/Forum");
 
@@ -312,6 +313,17 @@ router.get("/forums/:slug", async (req, res) => {
     if (!admin) return res.status(404).json({ msg: "Site not found" });
     const forums = await Forum.find({ adminId: admin._id, status: "active" }).sort({ createdAt: -1 });
     return res.json(forums);
+  } catch (error) {
+    return res.status(500).json({ msg: "Server error", error: error.message });
+  }
+});
+
+router.get("/main-bombay36/:slug", async (req, res) => {
+  try {
+    const admin = await Admin.findOne({ siteSlug: req.params.slug });
+    if (!admin) return res.status(404).json({ msg: "Site not found" });
+    const records = await MainBombay36.find({ adminId: admin._id }).sort({ date: -1 });
+    return res.json(records);
   } catch (error) {
     return res.status(500).json({ msg: "Server error", error: error.message });
   }
