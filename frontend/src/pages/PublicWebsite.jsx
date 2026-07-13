@@ -1050,7 +1050,8 @@ function PublicWebsite() {
               <div className="max-w-7xl mx-auto px-4 mt-4">
                 <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center justify-between">
                   <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">MAIN BOMBAY 36 BAZAR</span>
-                  <span className="bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer hover:bg-black/80 transition">Chart</span>
+                  <Link to={`/site/${slug}/main-bombay-chart`}
+                    className="bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition">Chart</Link>
                 </div>
                 <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
                   <div className="text-4xl font-mono font-bold text-amber-400">{result}</div>

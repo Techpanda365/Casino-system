@@ -15,6 +15,7 @@ import StarlineChartManagement from './StarlineChartManagement';
 import BannerManagement from './BannerManagement';
 import ForumManagement from './ForumManagement';
 import Profile from './Profile';
+import MainBombayManagement from './MainBombayManagement';
 
 const navItems = [
     {
@@ -127,6 +128,17 @@ const navItems = [
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+      )
+    },
+    {
+      path: '/admin/main-bombay',
+      label: 'Main Bombay 36',
+      adminOnly: true,
+      icon: (
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
         </svg>
       )
     },
@@ -346,6 +358,13 @@ function Dashboard({ token, role, setToken, setRole }) {
               <Route path="/forums" element={
                 <div className="bg-slate-800/50 rounded-2xl shadow-sm border border-slate-700 p-6">
                   <ForumManagement token={token} />
+                </div>
+              } />
+            )}
+            {role !== 'superadmin' && (
+              <Route path="/main-bombay" element={
+                <div className="bg-slate-800/50 rounded-2xl shadow-sm border border-slate-700 p-6">
+                  <MainBombayManagement token={token} />
                 </div>
               } />
             )}

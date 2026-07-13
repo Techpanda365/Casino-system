@@ -9,6 +9,7 @@ import ApiPage from './pages/ApiPage';
 import ForumSectionPage from './pages/ForumSectionPage';
 import ChartSectionPage from './pages/ChartSectionPage';
 import MarketChartPage from './pages/MarketChartPage';
+import MainBombayChart from './pages/MainBombayChart';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -31,6 +32,7 @@ function App() {
         <Route path="/site/:slug/forum/:section/:postId" element={<ForumSectionPage />} />
         <Route path="/site/:slug/chart/:chartType" element={<ChartSectionPage />} />
         <Route path="/site/:slug/chart/:chartType/:marketName" element={<MarketChartPage />} />
+        <Route path="/site/:slug/main-bombay-chart" element={<MainBombayChart />} />
         <Route path="/login" element={
           <Login setToken={setToken} setRole={setRole} />
         } />
