@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const API = 'http://localhost:5000/api/settings';
 const API_MARKETS = 'http://localhost:5000/api/markets';
@@ -26,7 +27,6 @@ function SiteSettings({ token }) {
     addMarketWhatsapp: '',
     addMarketEmail: ''
   });
-  const [msg, setMsg] = useState('');
   const [uploading, setUploading] = useState({ logo: false, favicon: false });
 
   const logoRef = useRef();
@@ -72,7 +72,7 @@ function SiteSettings({ token }) {
         addMarketWhatsapp: d.addMarketWhatsapp || '',
         addMarketEmail: d.addMarketEmail || ''
       });
-    } catch { alert('Failed to load settings'); }
+    } catch { toast.error('Failed to load settings'); }
   }, [token]);
 
   const fetchMarkets = useCallback(async () => {
@@ -99,7 +99,7 @@ function SiteSettings({ token }) {
       });
       setForm(prev => ({ ...prev, [field]: res.data.url }));
     } catch (err) {
-      alert(err.response?.data?.msg || 'Upload failed. Max size 2MB, images only.');
+      toast.error(err.response?.data?.msg || 'Upload failed. Max size 2MB, images only.');
     } finally {
       setUploading(prev => ({ ...prev, [field]: false }));
     }
@@ -107,11 +107,12 @@ function SiteSettings({ token }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const loading = toast.loading('Saving...');
     try {
       await axios.put(API, form, { headers: { Authorization: `Bearer ${token}` } });
-      setMsg('Settings saved successfully!');
-      setTimeout(() => setMsg(''), 3000);
-    } catch { alert('Failed to save settings'); }
+      toast.dismiss(loading);
+      toast.success('Settings saved successfully!');
+    } catch { toast.dismiss(loading); toast.error('Failed to save settings'); }
   };
 
   const textFields = [
@@ -128,11 +129,6 @@ function SiteSettings({ token }) {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-amber-400">Site Settings</h2>
-      {msg && (
-        <div className="bg-emerald-500/20 text-emerald-400 px-4 py-2 rounded mb-4 text-sm border border-emerald-500/20">
-          {msg}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
 
@@ -314,7 +310,8 @@ function SiteSettings({ token }) {
                       try {
                         await axios.delete(`${API_MARKETS}/${m._id}`, { headers: { Authorization: `Bearer ${token}` } });
                         fetchMarkets();
-                      } catch { alert('Failed to delete'); }
+                        toast.success(`"${m.name}" deleted`);
+                      } catch { toast.error('Failed to delete'); }
                     }} className="text-red-500 hover:text-red-400 text-xs font-medium">Delete</button>
                   </div>
                 ))}

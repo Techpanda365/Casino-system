@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Login from './components/Login';
 import Dashboard from './components/admin/Dashboard';
 import PublicWebsite from './pages/PublicWebsite';
@@ -15,6 +16,12 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster position="top-center" toastOptions={{
+        duration: 3000,
+        style: { background: '#1e293b', color: '#fff', fontSize: '14px', borderRadius: '10px' },
+        success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
+        error: { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
+      }} />
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/site/:slug" element={<PublicWebsite />} />

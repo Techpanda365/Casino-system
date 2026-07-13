@@ -14,6 +14,7 @@ import PassHuaManagement from './PassHuaManagement';
 import StarlineChartManagement from './StarlineChartManagement';
 import BannerManagement from './BannerManagement';
 import ForumManagement from './ForumManagement';
+import Profile from './Profile';
 
 const navItems = [
     {
@@ -269,10 +270,14 @@ function Dashboard({ token, role, setToken, setRole }) {
               <p className="text-xs text-slate-400">Welcome back, {adminName || role}</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-lg">
-                <div className={`w-2 h-2 rounded-full ${role === 'superadmin' ? 'bg-amber-500' : 'bg-emerald-500'} animate-pulse`}></div>
-                <span className="text-xs text-slate-300 capitalize">{role}</span>
-              </div>
+              <Link to="/admin/profile"
+                className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-lg hover:bg-slate-700 transition group"
+              >
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-[10px] font-bold text-white">
+                  {(adminName || role)[0].toUpperCase()}
+                </div>
+                <span className="text-xs text-slate-300 group-hover:text-white transition">{adminName || role}</span>
+              </Link>
             </div>
           </div>
         </header>
@@ -370,6 +375,11 @@ function Dashboard({ token, role, setToken, setRole }) {
                 </div>
               } />
             )}
+            <Route path="/profile" element={
+              <div className="bg-slate-800/50 rounded-2xl shadow-sm border border-slate-700 p-6">
+                <Profile token={token} />
+              </div>
+            } />
           </Routes>
         </main>
       </div>

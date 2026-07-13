@@ -10,16 +10,14 @@ function LiveTicker({ results, onRefresh, refreshing }) {
           <h2 className="text-amber-400/90 font-bold text-sm">☔ LIVE RESULT</h2>
           <p className="text-slate-600 text-xs">Sabse Tezz Live Result Yahi Milega</p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-1.5 p-2">
+        <div className="flex flex-col items-center gap-2 p-3">
           {results.map((r) => (
-            <div key={r.marketId} className="bg-white/[0.02] border border-white/[0.12] rounded-lg p-2 text-center flex flex-col items-center hover:border-amber-500/15 transition-colors">
-              <div className="text-slate-400 font-semibold text-xs uppercase tracking-wider truncate w-full">{r.name}</div>
+            <div key={r.marketId} className="w-full max-w-md bg-white/[0.02] border border-white/[0.12] rounded-lg p-2 text-center flex flex-col items-center hover:border-amber-500/15 transition-colors">
+              <div className="text-slate-400 font-semibold text-xs uppercase tracking-wider">{r.name}</div>
               {r.hasResult ? (
-                <>
-                  <div className="text-white font-mono font-bold text-base tracking-wider mt-1">
-                    {r.openPatti}{r.jodi ? `-${r.jodi}` : ''}{r.closePatti ? `-${r.closePatti}` : ''}
-                  </div>
-                </>
+                <div className="text-white font-mono font-bold text-lg tracking-wider mt-1">
+                  {r.openPatti}{r.jodi ? `-${r.jodi}` : ''}{r.closePatti ? `-${r.closePatti}` : ''}
+                </div>
               ) : (
                 <div className="text-slate-700 font-mono text-sm py-1">Loading...</div>
               )}

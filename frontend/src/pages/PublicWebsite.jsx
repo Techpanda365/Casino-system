@@ -667,13 +667,13 @@ function PublicWebsite() {
   // VIP Modal component
   const VipModal = () => {
     const premiumServices = [
-      { icon: '💎', title: 'VIP Expert Terminal', desc: 'Live Decoding & Fix Market Ank' },
-      { icon: '🎰', title: 'Scratch & Win Game', desc: 'Get Today\'s Fix Ank For Free' },
-      { icon: '🔮', title: 'Matka Astrology', desc: 'Your Lucky Number by Zodiac' },
-      { icon: '🧮', title: 'Magic Calculator', desc: 'Auto OTC & Panel Generator' },
-      { icon: '💭', title: 'Dream Number Guide', desc: 'Sapna Dekho Number Nikalo' },
-      { icon: '♠️', title: 'Evergreen Matka Tricks', desc: 'Special Premium Content' },
-      { icon: '🎯', title: 'Fix Open, Close & Jodi', desc: 'Kalyan Fix, Milan Fix, Rajdhani Fix' },
+      { icon: '🖥️', title: 'VIP Expert Terminal', desc: 'Live Decoding & Fix Market Ank' },
+      { icon: '🎁', title: 'Scratch & Win Game', desc: "Get Today's Fix Ank For Free" },
+      { icon: '⭐', title: 'Matka Astrology', desc: 'Your Lucky Number by Zodiac' },
+      { icon: '📊', title: 'Magic Calculator', desc: 'Auto OTC & Panel Generator' },
+      { icon: '🌙', title: 'Dream Number Guide', desc: 'Sapna Dekho Number Nikalo' },
+      { icon: '🚀', title: 'Evergreen Matka Tricks', desc: 'Special Premium Content' },
+      { icon: '🎁', title: 'Fix Open, Close & Jodi', desc: 'Kalyan Fix, Milan Fix, Rajdhani Fix' },
     ];
 
     return (
@@ -685,10 +685,8 @@ function PublicWebsite() {
           {/* Header */}
           <div className="sticky top-0 bg-gradient-to-r from-amber-600/20 to-amber-500/20 border-b border-amber-500/20 px-6 py-4 flex justify-between items-center backdrop-blur-sm">
             <div>
-              <h2 className="text-2xl font-bold text-amber-400 flex items-center gap-2">
-                <span className="animate-pulse">⭐</span>
-                PREMIUM SERVICES ZONE
-                <span className="animate-pulse delay-100">⭐</span>
+              <h2 className="text-lg font-bold text-amber-400 flex items-center gap-2">
+                💎 PREMIUM SERVICES ZONE 💎
               </h2>
               <p className="text-slate-400 text-xs mt-1">Unlock Exclusive Matka Features</p>
             </div>
@@ -701,24 +699,21 @@ function PublicWebsite() {
           </div>
 
           {/* Services List */}
-          <div className="p-6 space-y-3">
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
             {premiumServices.map((service, index) => (
               <div 
                 key={index}
-                className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 hover:border-amber-500/30 transition-all duration-300 hover:bg-amber-500/[0.05] group cursor-pointer"
+                className="bg-white/[0.03] border border-white/[0.08] rounded-lg p-3 hover:border-amber-500/30 transition-all duration-300 hover:bg-amber-500/[0.05] group cursor-pointer"
               >
-                <div className="flex items-start gap-4">
-                  <div className="text-3xl group-hover:scale-110 transition-transform duration-300">
+                <div className="flex items-start gap-3">
+                  <div className="text-2xl group-hover:scale-110 transition-transform duration-300">
                     {service.icon}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-white font-bold text-sm group-hover:text-amber-400 transition">
+                    <h3 className="text-white font-bold text-xs group-hover:text-amber-400 transition uppercase tracking-wider">
                       {service.title}
                     </h3>
-                    <p className="text-slate-400 text-xs mt-0.5">{service.desc}</p>
-                  </div>
-                  <div className="text-amber-500/30 group-hover:text-amber-400 transition text-xl">
-                    ▶
+                    <p className="text-slate-400 text-[10px] mt-0.5">{service.desc}</p>
                   </div>
                 </div>
               </div>
@@ -852,12 +847,11 @@ function PublicWebsite() {
 
       {/* Forum Navigation */}
       {forums.length > 0 && (() => {
-        const SECTION_ORDER = ['special-game', 'guessing-forum', 'expert-forum', 'trick-zone', 'fix-game', 'ratan-khatri', 'final-trick', 'evergreen-trick'];
+        const SECTION_ORDER = ['special-game', 'guessing-forum', 'expert-forum', 'fix-game', 'ratan-khatri', 'final-trick', 'evergreen-trick'];
         const SECTION_LABELS = {
           'special-game': 'Special Game',
           'guessing-forum': 'Guessing Forum',
           'expert-forum': 'Expert Forum',
-          'trick-zone': 'Kalyan Trick',
           'fix-game': 'Fix Game',
           'ratan-khatri': 'Ratan Khatri',
           'final-trick': 'Final Trick',
@@ -867,8 +861,6 @@ function PublicWebsite() {
         return (
           <div className="bg-black/30 border-b border-white/[0.08] overflow-x-auto">
             <div className="max-w-7xl mx-auto flex items-center gap-1 px-2 py-1.5 text-[11px] whitespace-nowrap">
-              <Link to={`/site/${slug}`} className="px-2.5 py-1 rounded-md text-slate-400 hover:text-amber-400 transition font-medium">Home</Link>
-              <Link to={`/site/${slug}/chart/jodi-count`} className="px-2.5 py-1 rounded-md text-slate-300 hover:text-amber-400 hover:bg-amber-500/10 transition font-medium">Charts</Link>
               {activeSections.map(s => (
                 <Link key={s} to={`/site/${slug}/forum/${s}`}
                   className="px-2.5 py-1 rounded-md text-slate-300 hover:text-amber-400 hover:bg-amber-500/10 transition font-medium"
@@ -876,7 +868,6 @@ function PublicWebsite() {
                   {SECTION_LABELS[s] || s}
                 </Link>
               ))}
-              <Link to={`/site/${slug}/about`} className="px-2.5 py-1 rounded-md text-slate-400 hover:text-amber-400 transition font-medium">About</Link>
             </div>
           </div>
         );
@@ -884,11 +875,14 @@ function PublicWebsite() {
 
       <div className="max-w-7xl mx-auto px-4 mt-4 text-center">
         <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg py-3 px-4">
-          <p className="text-amber-400 font-bold text-base uppercase tracking-wider">World Me Sabse Fast Satta Matka Result</p>
-          <p className="text-slate-400 text-xs mt-1">{settings.siteName || 'Lucky Bazar'} • Fast Result • Free Game</p>
           {settings.welcomeText && (
-            <p className="text-slate-500 text-xs mt-2">{settings.welcomeText}</p>
+            <p className="text-white font-bold text-sm">{settings.welcomeText}</p>
           )}
+          <p className="text-slate-400 text-xs mt-1">{settings.siteName || 'Lucky Bazar'} • Fast Result • Free Game</p>
+          <div className="mt-3 pt-3 border-t border-white/[0.08] text-xs text-slate-400 leading-relaxed">
+            <p className="text-amber-400 font-semibold mb-1">Satta Matka LuckyBazar.com Kalyan Matka Result</p>
+            <p>Lucky Bazar is the No. 1 Matka Sites welcomes you full-heartedly. Here below you can find the perfect guess by the top guesser along with the Fast Matka Result too. Aaj Ka Satta Kalyan Fix Single Jodi free update here you find top Matka Market of India Kalyan Main Milan Rajdhani* *kalyan Matka Tips *fast Matka Result *kalyan Main Rajdhani Matka Chart *Matka Guessing by Lucky Bazar By App Best Matka Site By Lucky Bazar 91</p>
+          </div>
         </div>
       </div>
 
@@ -904,6 +898,9 @@ function PublicWebsite() {
         return (
           <div className="max-w-7xl mx-auto px-4 mt-4">
             <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-1.5 text-center">
+                <span className="text-amber-400 font-bold text-xs uppercase tracking-widest">Today Lucky Number</span>
+              </div>
               <div className="grid divide-x divide-white/[0.12]" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
                 {hasLucky && (
                   <div className="py-4 text-center">
@@ -952,6 +949,21 @@ function PublicWebsite() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 mt-4">
+        {/* Guessing Section */}
+        <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl p-4 mb-4 text-center space-y-2">
+          <p className="text-amber-400 font-bold text-sm">🌍 Matka Guessing का असली मंच यहाँ है</p>
+          <p className="text-white font-semibold text-xs">🏆 Guess करो और बनो No.1</p>
+          <p className="text-slate-400 text-xs">📲 Download Lucky Bazar Forum App Today</p>
+          <a href={settings.appDownloadUrl || '#'} target="_blank" rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold text-xs px-6 py-2 rounded-lg hover:from-amber-500 hover:to-amber-400 transition shadow-lg shadow-amber-500/20"
+          >
+            📥 Download App
+          </a>
+          <div className="pt-3 border-t border-white/[0.08] text-xs text-slate-300 font-bold leading-loose tracking-wide px-2">
+            KALYAN MATKA | MATKA RESULT | KALYAN MATKA TIPS | SATTA MATKA | MATKA.COM | MATKA PANA JODI TODAY | BATTA SATKA | MATKA PATTI JODI NUMBER | MATKA RESULTS | MATKA CHART | MATKA JODI | SATTA COM | FULL RATE GAME | MATKA GAME | MATKA WAPKA | ALL MATKA RESULT LIVE ONLINE | MATKA RESULT | KALYAN MATKA RESULT | LUCKY BAZAR MATKA 143 | MAIN MATKA
+          </div>
+        </div>
+
         <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-2 mb-3 text-center">
           <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">WORLD ME SABSE FAST SATTA MATKA RESULT</span>
         </div>
@@ -1020,6 +1032,11 @@ function PublicWebsite() {
           </div>
         )}
 
+        <div className="border rounded-lg px-3 py-2 mb-3 text-center" style={{ backgroundColor: 'var(--theme-card-bg)', borderColor: 'var(--theme-border)' }}>
+          <p style={{ color: 'var(--theme-text-muted)' }} className="text-xs">Email for any inquiries Or Support:</p>
+          <p style={{ color: 'var(--theme-primary)' }} className="font-semibold text-sm">{settings.email || 'support@luckybazar.com'}</p>
+        </div>
+
         <div className="mt-4">
           <StarlineChartsDisplay charts={starlineCharts} />
         </div>
@@ -1031,8 +1048,9 @@ function PublicWebsite() {
           return (
             <>
               <div className="max-w-7xl mx-auto px-4 mt-4">
-                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
+                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center justify-between">
                   <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">MAIN BOMBAY 36 BAZAR</span>
+                  <span className="bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded cursor-pointer hover:bg-black/80 transition">Chart</span>
                 </div>
                 <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
                   <div className="text-4xl font-mono font-bold text-amber-400">{result}</div>
@@ -1048,126 +1066,150 @@ function PublicWebsite() {
 
         <div className="max-w-7xl mx-auto px-4 mt-4">
           <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
+            <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">LuckyBazar API — World's Fastest Satta Matka Result API</span>
+          </div>
+          <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
+            <button
+              onClick={() => window.open('https://wa.me/' + (settings.whatsappNumber || '919999999999'), '_blank')}
+              className="text-3xl mb-1 px-6 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 hover:bg-amber-500/30 transition-all cursor-pointer"
+              style={{ color: 'var(--theme-primary)' }}
+            >🚀CheckApiPricing🚀</button>
+            <p className="text-slate-400 text-xs mt-2">Realtime Update, 100% Trusted Legacy</p>
+            <p className="text-slate-400 text-xs">10X faster & 24/7 Support & Uptime</p>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 mt-4">
+          <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
             <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Lucky Special Game Zone</span>
           </div>
           <div className="flex justify-center">
             <ForumDisplay forums={forums} />
           </div>
+
+          {charts.length > 0 && (() => {
+            const CHART_TYPES = ['weekly', 'weekly-patti', 'weekly-open-close', 'weekly-jodi', 'cardlist', 'card-list-220', 'jodi-count', 'jodi-family', 'penal-count', 'penal-total'];
+            const CHART_LABELS = {
+              'weekly': 'Weekly Charts',
+              'weekly-patti': 'Weekly Patti/Penal Chart',
+              'weekly-open-close': 'Weekly Open/Close Line',
+              'weekly-jodi': 'Weekly Jodi Chart',
+              'cardlist': 'Card Lists',
+              'card-list-220': 'All 220 Card List',
+              'jodi-count': 'Matka Jodi Count Chart',
+              'jodi-family': 'Matka Jodi Family Chart',
+              'penal-count': 'Penal Count Chart',
+              'penal-total': 'Penal Total Chart'
+            };
+            const sections = CHART_TYPES.map(t => ({ type: t, label: CHART_LABELS[t] || t, items: charts.filter(c => c.type === t) })).filter(s => s.items.length > 0);
+            if (sections.length === 0) return null;
+            return (
+              <>
+                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
+                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Jodi List</span>
+                </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {sections.map(section => (
+                    <Link key={section.type} to={`/site/${slug}/chart/${section.type}`}
+                      className="bg-white/[0.03] border border-white/[0.12] rounded-lg px-4 py-2 text-center hover:border-amber-500/40 hover:bg-amber-500/[0.04] transition group min-w-[180px]"
+                    >
+                      <div className="text-amber-400 font-semibold text-xs uppercase tracking-wider group-hover:text-amber-300 transition">{section.label}</div>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            );
+          })()}
+
+          {(() => {
+            const autoEntries = markets.filter(m => m.result).map(m => ({
+              marketName: m.name,
+              description: `${m.result.openPatti}-${m.result.jodi}-${m.result.closePatti}`
+            }));
+            const adminEntries = passHua && passHua.entries ? passHua.entries : [];
+            const allEntries = [...adminEntries, ...autoEntries];
+            if (allEntries.length === 0) return null;
+            return (
+              <div className="mt-4">
+                <PassHuaDisplay data={{ date: passHua?.date || new Date().toISOString(), entries: allEntries }} />
+              </div>
+            );
+          })()}
+
+          {guesses.length > 0 && (
+            <div className="mt-4">
+              <GuessingZone guesses={guesses} date={new Date().toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' })} />
+            </div>
+          )}
+
+          {charts.length > 0 && (() => {
+            const WEEKLY_TYPES = ['weekly-patti', 'weekly-open-close', 'weekly-jodi', 'card-list-220'];
+            const WEEKLY_LABELS = {
+              'weekly-patti': 'Lucky Bazar Weekly Patti Or Penal Chart',
+              'weekly-open-close': 'Lucky Bazar Weekly Line Open Or Close',
+              'weekly-jodi': 'Lucky Bazar Weekly Jodi Chart',
+              'card-list-220': 'All 220 Card List'
+            };
+            const items = WEEKLY_TYPES.filter(t => charts.some(c => c.type === t));
+            if (items.length === 0) return null;
+            return (
+              <div className="space-y-3">
+                {items.map(type => {
+                  const typeCharts = charts.filter(c => c.type === type);
+                  return typeCharts.map(c => (
+                    <div key={c._id} className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
+                      <div className="px-3 py-1.5 text-center border-b border-white/[0.12] rainbow-bg">
+                        <span className="text-white font-bold text-sm uppercase tracking-wider">{WEEKLY_LABELS[type] || type}</span>
+                        {c.marketName && <span className="text-white/70 text-[10px] block">{c.marketName}</span>}
+                      </div>
+                      <div className="p-3">
+                        <div className="text-slate-300 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
+                      </div>
+                    </div>
+                  ));
+                })}
+              </div>
+            );
+          })()}
         </div>
 
-        {charts.length > 0 && (() => {
-          const CHART_TYPES = ['weekly', 'weekly-patti', 'weekly-open-close', 'weekly-jodi', 'cardlist', 'card-list-220', 'jodi-count', 'jodi-family', 'penal-count', 'penal-total'];
-          const CHART_LABELS = {
-            'weekly': 'Weekly Charts',
-            'weekly-patti': 'Weekly Patti/Penal Chart',
-            'weekly-open-close': 'Weekly Open/Close Line',
-            'weekly-jodi': 'Weekly Jodi Chart',
-            'cardlist': 'Card Lists',
-            'card-list-220': 'All 220 Card List',
-            'jodi-count': 'Matka Jodi Count Chart',
-            'jodi-family': 'Matka Jodi Family Chart',
-            'penal-count': 'Penal Count Chart',
-            'penal-total': 'Penal Total Chart'
-          };
-          const sections = CHART_TYPES.map(t => ({ type: t, label: CHART_LABELS[t] || t, items: charts.filter(c => c.type === t) })).filter(s => s.items.length > 0);
-          if (sections.length === 0) return null;
-          return (
-            <div className="max-w-7xl mx-auto px-4 mt-4">
-              <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
-                <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Jodi List</span>
+        {markets.length > 0 && (
+          <div className="space-y-4">
+            <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
+                <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">SATTA MATKA JODI CHART</h3>
               </div>
-              <div className="flex flex-wrap justify-center gap-2">
-                {sections.map(section => (
-                  <Link key={section.type} to={`/site/${slug}/chart/${section.type}`}
-                    className="bg-white/[0.03] border border-white/[0.12] rounded-lg px-4 py-2 text-center hover:border-amber-500/40 hover:bg-amber-500/[0.04] transition group min-w-[180px]"
+              <div className="flex flex-col items-center divide-y divide-white/[0.06]">
+                {markets.map(m => (
+                  <Link key={`j-${m._id}`} to={`/site/${slug}/chart/jodi-count/${encodeURIComponent(m.name)}`}
+                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
                   >
-                    <div className="text-amber-400 font-semibold text-xs uppercase tracking-wider group-hover:text-amber-300 transition">{section.label}</div>
+                    {m.name} Chart
                   </Link>
                 ))}
               </div>
             </div>
-          );
-        })()}
-
-        {passHua && passHua.entries && passHua.entries.length > 0 && (
-          <div className="mt-4">
-            <PassHuaDisplay data={passHua} />
+            <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
+                <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">MATKA PANEL CHART</h3>
+              </div>
+              <div className="flex flex-col items-center divide-y divide-white/[0.06]">
+                {markets.map(m => (
+                  <Link key={`p-${m._id}`} to={`/site/${slug}/chart/penal-count/${encodeURIComponent(m.name)}`}
+                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
+                  >
+                    {m.name} Panel Chart
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
-        {guesses.length > 0 && (
-          <div className="mt-4">
-            <GuessingZone guesses={guesses} date={new Date().toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' })} />
-          </div>
-        )}
-
-        {charts.length > 0 && (() => {
-          const WEEKLY_TYPES = ['weekly-patti', 'weekly-open-close', 'weekly-jodi', 'card-list-220'];
-          const WEEKLY_LABELS = {
-            'weekly-patti': 'Lucky Bazar Weekly Patti Or Penal Chart',
-            'weekly-open-close': 'Lucky Bazar Weekly Line Open Or Close',
-            'weekly-jodi': 'Lucky Bazar Weekly Jodi Chart',
-            'card-list-220': 'All 220 Card List'
-          };
-          const items = WEEKLY_TYPES.filter(t => charts.some(c => c.type === t));
-          if (items.length === 0) return null;
-          return (
-            <div className="max-w-7xl mx-auto px-4 mt-4 space-y-3">
-              {items.map(type => {
-                const typeCharts = charts.filter(c => c.type === type);
-                return typeCharts.map(c => (
-                  <div key={c._id} className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
-                    <div className="px-3 py-1.5 text-center border-b border-white/[0.12] rainbow-bg">
-                      <span className="text-white font-bold text-sm uppercase tracking-wider">{WEEKLY_LABELS[type] || type}</span>
-                      {c.marketName && <span className="text-white/70 text-[10px] block">{c.marketName}</span>}
-                    </div>
-                    <div className="p-3">
-                      <div className="text-slate-300 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
-                    </div>
-                  </div>
-                ));
-              })}
-            </div>
-          );
-        })()}
-      </main>
-
-      {markets.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 mt-4 space-y-4">
-          <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
-              <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">SATTA MATKA JODI CHART</h3>
-            </div>
-            <div className="flex flex-col items-center divide-y divide-white/[0.06]">
-              {markets.map(m => (
-                <Link key={`j-${m._id}`} to={`/site/${slug}/chart/jodi-count/${encodeURIComponent(m.name)}`}
-                  className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
-                >
-                  {m.name} Chart
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
-              <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">MATKA PANEL CHART</h3>
-            </div>
-            <div className="flex flex-col items-center divide-y divide-white/[0.06]">
-              {markets.map(m => (
-                <Link key={`p-${m._id}`} to={`/site/${slug}/chart/penal-count/${encodeURIComponent(m.name)}`}
-                  className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
-                >
-                  {m.name} Panel Chart
-                </Link>
-              ))}
-            </div>
-          </div>
+        <div className="mt-4">
+          <StarlineTable starlines={starlines} />
         </div>
-      )}
-
-      <div className="mt-4">
-        <StarlineTable starlines={starlines} />
-      </div>
+      </main>
 
       <AppDownload settings={settings} />
 
