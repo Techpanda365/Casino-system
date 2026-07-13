@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setToken, setRole }) => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState('superadmin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +23,7 @@ const Login = ({ setToken, setRole }) => {
       localStorage.setItem('adminName', res.data.admin.name || '');
       setToken(res.data.token);
       setRole(res.data.admin.role);
-      window.location.href = '/admin';
+      navigate('/admin');
     } catch (err) {
       setError(err.response?.data?.msg || 'Login failed. Please try again.');
       setLoading(false);

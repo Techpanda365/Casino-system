@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Login from './components/Login';
 import Dashboard from './components/admin/Dashboard';
@@ -16,7 +16,7 @@ function App() {
   const [role, setRole] = useState(localStorage.getItem('role') || '');
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Toaster position="top-center" toastOptions={{
         duration: 3000,
         style: { background: '#1e293b', color: '#fff', fontSize: '14px', borderRadius: '10px' },
@@ -45,7 +45,7 @@ function App() {
         } />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

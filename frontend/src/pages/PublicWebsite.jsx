@@ -1233,7 +1233,7 @@ function PublicWebsite() {
           dangerouslySetInnerHTML={{ __html: settings.footer || `&copy; ${settings.siteName || 'Lucky Bazar'}. All rights reserved.` }}
         />
         <div className="pb-4 flex items-center justify-center gap-3">
-          <a href="/login" className="text-slate-500 text-xs hover:text-amber-400 transition">Admin</a>
+          <Link to="/login" className="text-slate-500 text-xs hover:text-amber-400 transition">Admin</Link>
         </div>
       </footer>
 
