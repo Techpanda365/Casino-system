@@ -1035,7 +1035,7 @@ function PublicWebsite() {
 
         <div className="border rounded-lg px-3 py-2 mb-3 text-center" style={{ backgroundColor: 'var(--theme-card-bg)', borderColor: 'var(--theme-border)' }}>
           <p style={{ color: 'var(--theme-text-muted)' }} className="text-xs">Email for any inquiries Or Support:</p>
-          <p style={{ color: 'var(--theme-primary)' }} className="font-semibold text-sm">{settings.email || 'support@luckybazar.com'}</p>
+          <a href={`mailto:${settings.email || 'support@luckybazar.com'}`} style={{ color: 'var(--theme-primary)' }} className="font-semibold text-sm hover:underline">{settings.email || 'support@luckybazar.com'}</a>
         </div>
 
         <div className="mt-4">
