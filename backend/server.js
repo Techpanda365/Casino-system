@@ -52,7 +52,7 @@ app.post('/api/upload', auth, upload.single('file'), (req, res) => {
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('✅ MongoDB Atlas connected successfully!');
+    console.log('MongoDB Atlas connected successfully!');
     console.log(`📦 Database: ${mongoose.connection.db.databaseName}`);
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
