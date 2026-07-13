@@ -24,7 +24,7 @@ function GuessingZone({ guesses, date }) {
 
       {/* Market list — 2 columns with divider */}
       <div className="p-2">
-        <div className="grid grid-cols-2 divide-x divide-white/[0.12]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.12]">
           <div className="space-y-2 pr-2">
             {guesses.filter((_, i) => i % 2 === 0).map((g) => (
               <div key={g._id} className="bg-white/[0.02] border border-white/[0.08] rounded-lg p-3 hover:border-amber-500/20 transition-colors">

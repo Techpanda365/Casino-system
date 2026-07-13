@@ -83,7 +83,7 @@ function HistoryModal({ slug, marketId, marketName, type, onClose }) {
 ───────────────────────────────────────────── */
 function JodiChart({ weeks }) {
   return (
-    <table className="w-full text-center border-collapse">
+    <table className="w-full text-center border-collapse min-w-[500px]">
       <thead>
         <tr className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20">
           {[1, 2, 3, 4, 5, 6].map((d) => (
@@ -131,7 +131,7 @@ function PanelChart({ weeks }) {
   const cols = Math.min(maxDays, 6);
 
   return (
-    <table className="w-full text-center border-collapse text-xs">
+    <table className="w-full text-center border-collapse text-xs min-w-[500px]">
       <thead>
         <tr className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20">
           <th className="py-2 px-3 text-amber-400/70 font-bold text-left whitespace-nowrap border-r border-white/[0.1]">

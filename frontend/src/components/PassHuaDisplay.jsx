@@ -31,20 +31,20 @@ function PassHuaDisplay({ data }) {
 
         {/* Header with stickers on both sides */}
         <div className="bg-gradient-to-r from-green-500/20 to-green-500/5 border-b border-green-500/20 px-3 py-2 text-center">
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
             {/* Left Sticker */}
-            <span className="text-xl animate-bounce text-yellow-400">🎉</span>
-            <span className="text-xl animate-bounce delay-75 text-pink-400">✨</span>
-            <span className="text-xl animate-bounce delay-150 text-purple-400">🌟</span>
+            <span className="text-lg sm:text-xl animate-bounce text-yellow-400">🎉</span>
+            <span className="text-lg sm:text-xl animate-bounce delay-75 text-pink-400">✨</span>
+            <span className="text-lg sm:text-xl animate-bounce delay-150 text-purple-400">🌟</span>
             
             <h2 className="text-green-400 font-bold text-sm uppercase tracking-widest">
               AAJ KYA PASS HUA
             </h2>
             
             {/* Right Sticker */}
-            <span className="text-xl animate-bounce delay-150 text-purple-400">🌟</span>
-            <span className="text-xl animate-bounce delay-75 text-pink-400">✨</span>
-            <span className="text-xl animate-bounce text-yellow-400">🎉</span>
+            <span className="text-lg sm:text-xl animate-bounce delay-150 text-purple-400">🌟</span>
+            <span className="text-lg sm:text-xl animate-bounce delay-75 text-pink-400">✨</span>
+            <span className="text-lg sm:text-xl animate-bounce text-yellow-400">🎉</span>
           </div>
           
           {/* Extra sticker line below */}

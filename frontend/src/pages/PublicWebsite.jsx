@@ -901,7 +901,7 @@ function PublicWebsite() {
               <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-1.5 text-center">
                 <span className="text-amber-400 font-bold text-xs uppercase tracking-widest">Today Lucky Number</span>
               </div>
-              <div className="grid divide-x divide-white/[0.12]" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
+              <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${cols} divide-x divide-white/[0.12]`}>
                 {hasLucky && (
                   <div className="py-4 text-center">
                     <div className="text-slate-500 text-xs uppercase tracking-widest mb-1">Today Lucky Number</div>
@@ -1007,7 +1007,7 @@ function PublicWebsite() {
                     Panel
                   </button>
                 </div>
-                <div className="text-center">
+                <div className="text-center px-16">
                   <div className={`text-sm font-bold ${
                     m.result ? 'text-black' : 'text-amber-400/80'
                   }`}>
@@ -1015,7 +1015,7 @@ function PublicWebsite() {
                   </div>
                   {m.result ? (
                     <>
-                      <div className="text-lg font-mono font-bold tracking-wider text-black mt-0.5">
+                      <div className="text-lg font-mono font-bold tracking-wider text-black mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
                         {m.result.openPatti}<span className="text-black/40">-</span>{m.result.jodi}<span className="text-black/40">-</span>{m.result.closePatti}
                       </div>
                       <div className="text-[11px] text-black/60 mt-0.5">{m.openTime} — {m.closeTime}</div>
@@ -1112,7 +1112,7 @@ function PublicWebsite() {
                 <div className="flex flex-wrap justify-center gap-2">
                   {sections.map(section => (
                     <Link key={section.type} to={`/site/${slug}/chart/${section.type}`}
-                      className="bg-white/[0.03] border border-white/[0.12] rounded-lg px-4 py-2 text-center hover:border-amber-500/40 hover:bg-amber-500/[0.04] transition group min-w-[180px]"
+                      className="bg-white/[0.03] border border-white/[0.12] rounded-lg px-4 py-2 text-center hover:border-amber-500/40 hover:bg-amber-500/[0.04] transition group min-w-[140px] sm:min-w-[180px]"
                     >
                       <div className="text-amber-400 font-semibold text-xs uppercase tracking-wider group-hover:text-amber-300 transition">{section.label}</div>
                     </Link>
