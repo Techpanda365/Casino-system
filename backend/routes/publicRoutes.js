@@ -11,6 +11,7 @@ const StarlineChart = require("../models/StarlineChart");
 const MainBombay36 = require("../models/MainBombay36");
 const Banner = require("../models/Banner");
 const Forum = require("../models/Forum");
+const Contact = require("../models/Contact");
 
 const router = express.Router();
 
@@ -68,7 +69,10 @@ router.get("/settings/:slug", async (req, res) => {
       "themeText", "themeTextMuted", "themeHeaderBg", "themeSectionBg",
       "themeResultBg", "themeResultText", "themeSectionText", "themeCardRadius",
       "themeHoverBg", "themeShadow", "themeFont",
-      "addMarketEnabled", "addMarketTitle", "addMarketContent", "addMarketWhatsapp", "addMarketEmail"
+      "addMarketEnabled", "addMarketTitle", "addMarketContent", "addMarketWhatsapp", "addMarketEmail",
+      "footerAboutLabel", "footerAboutEnabled", "footerContactLabel", "footerContactEnabled",
+      "footerPrivacyLabel", "footerPrivacyEnabled", "footerTermsLabel", "footerTermsEnabled",
+      "footerApiLabel", "footerApiEnabled", "footerDisclaimer"
     ];
     const result = {};
     publicFields.forEach((f) => { result[f] = settings[f] || ""; });
@@ -326,6 +330,20 @@ router.get("/main-bombay36/:slug", async (req, res) => {
     return res.json(records);
   } catch (error) {
     return res.status(500).json({ msg: "Server error", error: error.message });
+  }
+});
+
+// Contact form submission
+router.post("/contact/:slug", async (req, res) => {
+  try {
+    const admin = await Admin.findOne({ siteSlug: req.params.slug });
+    if (!admin) return res.status(404).json({ msg: "Site not found" });
+    const { name, email, phone, gameType, gameName, message, record } = req.body;
+    const contact = new Contact({ adminId: admin._id, name, email, phone, gameType, gameName, message, record });
+    await contact.save();
+    res.json({ msg: "Form submitted successfully!" });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error", error: error.message });
   }
 });
 

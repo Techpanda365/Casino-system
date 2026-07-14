@@ -36,7 +36,19 @@ const SiteSettingSchema = new mongoose.Schema({
   addMarketTitle: { type: String, default: 'Add Your Market' },
   addMarketContent: { type: String, default: 'Contact us to add your market.' },
   addMarketWhatsapp: { type: String, default: '' },
-  addMarketEmail: { type: String, default: '' }
+  addMarketEmail: { type: String, default: '' },
+  // Footer Links
+  footerAboutLabel: { type: String, default: 'About us' },
+  footerAboutEnabled: { type: Boolean, default: true },
+  footerContactLabel: { type: String, default: 'Contact us' },
+  footerContactEnabled: { type: Boolean, default: true },
+  footerPrivacyLabel: { type: String, default: 'Privacy & Policy' },
+  footerPrivacyEnabled: { type: Boolean, default: true },
+  footerTermsLabel: { type: String, default: 'Term And Conditions' },
+  footerTermsEnabled: { type: Boolean, default: true },
+  footerApiLabel: { type: String, default: 'Result Api' },
+  footerApiEnabled: { type: Boolean, default: true },
+  footerDisclaimer: { type: String, default: '' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('SiteSetting', SiteSettingSchema);

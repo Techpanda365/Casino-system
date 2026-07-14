@@ -937,14 +937,15 @@ function PublicWebsite() {
       <LiveTicker results={liveResults} onRefresh={handleRefresh} refreshing={refreshing} />
 
       <div className="max-w-7xl mx-auto px-4 mt-4">
-        <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl px-3 py-3 sm:p-4 space-y-2 text-sm text-white/80 leading-relaxed">
-          <p>🔥 बुकी-खाईवाल भाइयों के लिए बड़ी खबर!</p>
+        <div className="bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-2xl px-4 py-4 sm:p-5 space-y-2 text-sm text-white/80 leading-relaxed" style={{borderColor: 'var(--theme-border)', boxShadow: '0 4px 24px rgba(0,0,0,0.2)'}}>
+          <p className="text-amber-400 font-bold text-base">🔥 बुकी-खाईवाल भाइयों के लिए बड़ी खबर!</p>
           <p>📈 किसी भी कंपनी या मार्केट में डायरेक्ट खाता खुलवाने, कंपनी को कटिंग देने और बिना किसी टेंशन के व्यापार शुरू करने की पूरी सुविधा हमारे द्वारा दी जाएगी।</p>
           <p>🚀 हमारी World Famous साइट पर अपना बाज़ार शुरू करवाने के लिए नीचे दिया गया चैनल जॉइन करें।</p>
-          <p>💎 ईमानदारी और विश्वसनीयता का दूसरा नाम – LuckyBazar.com</p>
+          <p>💎 ईमानदारी और विश्वसनीयता का दूसरा नाम – <strong className="text-amber-400">{settings.siteName || 'LUCKY BAZAR'}</strong></p>
+          <p className="text-[11px] text-slate-500 italic">📌 (शर्तें लागू)</p>
           <div className="flex flex-wrap gap-2 pt-2">
-            <a href={settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g,'')}` : '#'} target="_blank" rel="noopener noreferrer" className="inline-block bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">📢 Join WhatsApp Channel</a>
-            <a href={settings.email ? `mailto:${settings.email}` : '#'} className="inline-block bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">📧 Email Us</a>
+            <a href={settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g,'')}` : '#'} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors">📢 Join WhatsApp Channel</a>
+            <a href={settings.email ? `mailto:${settings.email}` : '#'} className="inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-colors">📧 Email Us</a>
           </div>
         </div>
       </div>
@@ -1033,9 +1034,16 @@ function PublicWebsite() {
           </div>
         )}
 
-        <div className="border rounded-lg px-3 py-2 mb-3 text-center" style={{ backgroundColor: 'var(--theme-card-bg)', borderColor: 'var(--theme-border)' }}>
-          <p style={{ color: 'var(--theme-text-muted)' }} className="text-xs">Email for any inquiries Or Support:</p>
-          <a href={`mailto:${settings.email || 'support@luckybazar.com'}`} style={{ color: 'var(--theme-primary)' }} className="font-semibold text-sm hover:underline">{settings.email || 'support@luckybazar.com'}</a>
+        {/* Sponsored Ad Game */}
+        <div className="border rounded-lg px-3 py-3 mb-3 text-center" style={{ backgroundColor: 'var(--theme-card-bg)', borderColor: 'var(--theme-primary)' }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--theme-primary)' }}>📢 Advertise Your Game Here</p>
+          <p className="text-[11px] mb-2" style={{ color: 'var(--theme-text-muted)' }}>अपने मार्केट का प्रचार करें — हमारी World Famous साइट पर लिस्टिंग पाएँ</p>
+          <a href={settings.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g,'')}` : '#'}
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-600 to-amber-500 text-white text-xs font-bold px-5 py-2 rounded-lg hover:from-amber-500 hover:to-amber-400 transition shadow-lg"
+          >
+            📞 Contact Now — {settings.whatsappNumber || 'WhatsApp'}
+          </a>
         </div>
 
         <div className="mt-4">
@@ -1089,6 +1097,7 @@ function PublicWebsite() {
             <ForumDisplay forums={forums} />
           </div>
 
+          <div className="mt-6">
           {charts.length > 0 && (() => {
             const CHART_TYPES = ['weekly', 'weekly-patti', 'weekly-open-close', 'weekly-jodi', 'cardlist', 'card-list-220', 'jodi-count', 'jodi-family', 'penal-count', 'penal-total'];
             const CHART_LABELS = {
@@ -1122,6 +1131,7 @@ function PublicWebsite() {
               </>
             );
           })()}
+          </div>
 
           {(() => {
             const autoEntries = markets.filter(m => m.result).map(m => ({
@@ -1147,28 +1157,60 @@ function PublicWebsite() {
           {charts.length > 0 && (() => {
             const WEEKLY_TYPES = ['weekly-patti', 'weekly-open-close', 'weekly-jodi', 'card-list-220'];
             const WEEKLY_LABELS = {
-              'weekly-patti': 'Lucky Bazar Weekly Patti Or Penal Chart',
-              'weekly-open-close': 'Lucky Bazar Weekly Line Open Or Close',
-              'weekly-jodi': 'Lucky Bazar Weekly Jodi Chart',
+              'weekly-patti': 'Weekly Patti/Penal Chart',
+              'weekly-open-close': 'Weekly Open/Close Line',
+              'weekly-jodi': 'Weekly Jodi Chart',
               'card-list-220': 'All 220 Card List'
+            };
+            const WEEKLY_DESCRIPTIONS = {
+              'weekly-patti': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
+              'weekly-open-close': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
+              'weekly-jodi': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
+              'card-list-220': ''
+            };
+            const WEEKLY_HEADERS = {
+              'weekly-patti': '📊 Patti/Penal Chart',
+              'weekly-open-close': '📈 Open/Close Line',
+              'weekly-jodi': '🔢 Jodi Chart',
+              'card-list-220': '🃏 All 220 Card List'
             };
             const items = WEEKLY_TYPES.filter(t => charts.some(c => c.type === t));
             if (items.length === 0) return null;
+            
+            const today = new Date();
+            const getMonday = (d) => { const dt = new Date(d); const day = dt.getDay(); const diff = dt.getDate() - day + (day === 0 ? -6 : 1); dt.setDate(diff); return dt; };
+            const mon = getMonday(today);
+            const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
+            const fmt = (d) => d.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-');
+            const dateRange = `${fmt(mon)} To ${fmt(sun)}`;
+            
             return (
-              <div className="space-y-3">
+              <div className="space-y-4 mt-4">
                 {items.map(type => {
                   const typeCharts = charts.filter(c => c.type === type);
-                  return typeCharts.map(c => (
-                    <div key={c._id} className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
-                      <div className="px-3 py-1.5 text-center border-b border-white/[0.12] rainbow-bg">
-                        <span className="text-white font-bold text-sm uppercase tracking-wider">{WEEKLY_LABELS[type] || type}</span>
-                        {c.marketName && <span className="text-white/70 text-[10px] block">{c.marketName}</span>}
+                  return (
+                    <div key={type} className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden shadow-lg">
+                      <div className="bg-gradient-to-r from-amber-600/30 to-amber-500/10 border-b border-amber-500/20 px-4 py-3 text-center">
+                        <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">{WEEKLY_HEADERS[type] || WEEKLY_LABELS[type]}</span>
+                        <span className="text-white/90 font-semibold text-xs block mt-0.5">{WEEKLY_LABELS[type]} From {dateRange}</span>
+                        {WEEKLY_DESCRIPTIONS[type] && (
+                          <span className="text-white/50 text-[10px] block mt-0.5">{WEEKLY_DESCRIPTIONS[type]}</span>
+                        )}
                       </div>
-                      <div className="p-3">
-                        <div className="text-slate-300 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
-                      </div>
+                      {typeCharts.map((c, idx) => (
+                        <div key={c._id} className={idx > 0 ? 'border-t border-white/[0.06]' : ''}>
+                          {c.marketName && (
+                            <div className="px-4 py-1 bg-white/[0.02]">
+                              <span className="text-amber-400/70 text-[10px] font-semibold uppercase tracking-wider">{c.marketName}</span>
+                            </div>
+                          )}
+                          <div className="p-4">
+                            <div className="text-slate-200 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ));
+                  );
                 })}
               </div>
             );
@@ -1208,9 +1250,24 @@ function PublicWebsite() {
           </div>
         )}
 
-        <div className="mt-4">
-          <StarlineTable starlines={starlines} />
-        </div>
+        {starlines.filter(s => !s.name?.toLowerCase().includes('rajshree')).length > 0 && (
+          <div className="mt-4">
+            <StarlineTable starlines={starlines.filter(s => !s.name?.toLowerCase().includes('rajshree'))} />
+          </div>
+        )}
+        {starlines.filter(s => s.name?.toLowerCase().includes('rajshree')).length > 0 && (
+          <div className="mt-4">
+            <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
+              <h3 className="text-amber-400 font-bold text-sm uppercase tracking-wider">MUMBAI RAJSHREE STAR LINE</h3>
+            </div>
+            <StarlineTable starlines={starlines.filter(s => s.name?.toLowerCase().includes('rajshree'))} />
+          </div>
+        )}
+        {starlines.length === 0 && (
+          <div className="mt-4">
+            <StarlineTable starlines={starlines} />
+          </div>
+        )}
       </main>
 
       <AppDownload settings={settings} />
@@ -1228,13 +1285,42 @@ function PublicWebsite() {
         </section>
       )}
 
-      <footer className="border-t border-white/[0.12] mt-6">
-        <div className="max-w-7xl mx-auto px-4 py-4 text-center text-slate-600 text-xs"
-          dangerouslySetInnerHTML={{ __html: settings.footer || `&copy; ${settings.siteName || 'Lucky Bazar'}. All rights reserved.` }}
-        />
-        <div className="pb-4 flex items-center justify-center gap-3">
-          <Link to="/login" className="text-slate-500 text-xs hover:text-amber-400 transition">Admin</Link>
+      <footer className="border-t border-white/[0.12] mt-6 pt-4 pb-2">
+        <div className="max-w-7xl mx-auto px-4 mb-4">
+          <div className="bg-red-500/5 border border-red-500/20 rounded-lg px-3 py-2.5">
+            <p className="text-[10px] text-red-400 font-bold uppercase tracking-wider mb-1">DISCLAIMER</p>
+            <p className="text-xs text-slate-200 leading-relaxed font-bold">{settings.footerDisclaimer || 'Visiting this site and browsing it is strictly recommended at your own risk. Every information available here is only according to informational purpose and based on astrology and number calculations. We are no associated or affiliated with any illegal Matka business. We make sure we follow all rules and regulations of the regions where you are accessing the website. There are also chances that the website may be banned in your area and after that if you are using it, you are solely dependable and responsible for any damage, loss or legal action taken. If you are the one who does not like our disclaimer it is advised that you leave our website immediately. Copying of any information/contents posted on the website is strictly prohibited and against the law.'}</p>
+          </div>
         </div>
+        <div className="max-w-7xl mx-auto px-4 text-center space-y-2">
+          <p className="text-[10px] text-slate-500 tracking-[2px] font-semibold uppercase">POWERED BY</p>
+          <p className="text-amber-400 font-bold text-sm tracking-wider">LUCKYBAZAR</p>
+          <p className="text-[10px] text-slate-500">© 2011 - 2026 luckybazar.com</p>
+          <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400 flex-wrap">
+            {settings.footerAboutEnabled !== false && (
+              <Link to={`/site/${slug}/about`} className="hover:text-amber-400 transition">{settings.footerAboutLabel || 'About us'}</Link>
+            )}
+            {settings.footerAboutEnabled !== false && settings.footerContactEnabled !== false && <span className="text-slate-600">|</span>}
+            {settings.footerContactEnabled !== false && (
+              <Link to={`/site/${slug}/contact`} className="hover:text-amber-400 transition">{settings.footerContactLabel || 'Contact us'}</Link>
+            )}
+            {(settings.footerContactEnabled !== false && settings.footerPrivacyEnabled !== false) && <span className="text-slate-600">|</span>}
+            {settings.footerPrivacyEnabled !== false && (
+              <Link to={`/site/${slug}/privacy`} className="hover:text-amber-400 transition">{settings.footerPrivacyLabel || 'Privacy &amp; Policy'}</Link>
+            )}
+            {(settings.footerPrivacyEnabled !== false && settings.footerTermsEnabled !== false) && <span className="text-slate-600">|</span>}
+            {settings.footerTermsEnabled !== false && (
+              <Link to={`/site/${slug}/terms`} className="hover:text-amber-400 transition">{settings.footerTermsLabel || 'Term And Conditions'}</Link>
+            )}
+            {(settings.footerTermsEnabled !== false && settings.footerApiEnabled !== false) && <span className="text-slate-600">|</span>}
+            {settings.footerApiEnabled !== false && (
+              <Link to={`/site/${slug}/api`} className="hover:text-amber-400 transition">{settings.footerApiLabel || 'Result Api'}</Link>
+            )}
+          </div>
+          </div>
+          <div className="pt-1">
+            <Link to="/login" className="text-slate-600 text-[10px] hover:text-amber-400 transition">Admin</Link>
+          </div>
       </footer>
 
       {historyModal && (

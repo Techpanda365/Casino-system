@@ -320,6 +320,46 @@ function SiteSettings({ token }) {
           )}
         </div>
 
+        {/* ── Footer Links ── */}
+        <div className="border rounded-xl p-4 bg-slate-800/30 border-slate-700">
+          <h3 className="text-sm font-bold text-amber-400 mb-3">Footer Links</h3>
+          <p className="text-[10px] text-slate-500 mb-3">Each link can be renamed or hidden from the public footer.</p>
+          {[
+            { key: 'footerAbout', label: 'About us', page: '/about' },
+            { key: 'footerContact', label: 'Contact us', page: '/contact' },
+            { key: 'footerPrivacy', label: 'Privacy & Policy', page: '/privacy' },
+            { key: 'footerTerms', label: 'Term And Conditions', page: '/terms' },
+            { key: 'footerApi', label: 'Result Api', page: '/api' },
+          ].map(({ key, label, page }) => (
+            <div key={key} className="flex flex-wrap items-center gap-2 mb-2 p-2 bg-slate-900/50 rounded-lg">
+              <div className="flex-1 min-w-[120px]">
+                <label className="text-[10px] text-slate-500 block">{label}</label>
+                <input type="text" className="w-full border border-slate-600 bg-slate-900 p-1.5 rounded text-xs text-white mt-0.5"
+                  value={form[`${key}Label`] || ''}
+                  onChange={(e) => setForm({ ...form, [`${key}Label`]: e.target.value })}
+                  placeholder={label}
+                />
+              </div>
+              <label className="flex items-center gap-1.5 text-[10px] text-slate-400 cursor-pointer whitespace-nowrap">
+                <input type="checkbox" className="accent-amber-500"
+                  checked={form[`${key}Enabled`] !== false}
+                  onChange={(e) => setForm({ ...form, [`${key}Enabled`]: e.target.checked })}
+                />
+                Show
+              </label>
+              <span className="text-[9px] text-slate-600">→ {page}</span>
+            </div>
+          ))}
+          <div className="mt-2">
+            <label className="text-xs font-semibold text-slate-300 block mb-1">Custom Disclaimer Text</label>
+            <textarea className="w-full border border-slate-600 bg-slate-900 p-2 rounded text-sm h-20 text-white"
+              value={form.footerDisclaimer || ''}
+              onChange={(e) => setForm({ ...form, footerDisclaimer: e.target.value })}
+              placeholder="Leave empty to use default disclaimer"
+            />
+          </div>
+        </div>
+
         {/* ── Theme Settings ── */}
         <div className="border rounded-xl p-4 bg-slate-800/30 border-slate-700">
           <h3 className="text-sm font-bold text-amber-400 mb-3">Theme Settings</h3>
