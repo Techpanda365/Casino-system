@@ -828,12 +828,10 @@ function PublicWebsite() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center gap-3 min-w-0">
-            {settings.logo && <img src={settings.logo} alt="" className="h-10 w-auto shrink-0" />}
-            <div className="min-w-0 flex-1">
-              <h1 className="text-lg font-bold tracking-wide text-white truncate">{settings.siteName || 'Lucky Bazar'}</h1>
-              <p className="text-xs font-medium text-white/60 uppercase tracking-widest truncate">{settings.siteName || 'Lucky Bazar'} • FAST RESULT • FREE GAME</p>
-            </div>
+          <div className="flex flex-col items-center text-center min-w-0">
+            {settings.logo && <img src={settings.logo} alt="" className="h-10 w-auto mb-1" />}
+            <h1 className="text-lg font-bold tracking-wide text-white truncate max-w-full">{settings.siteName || 'Lucky Bazar'}</h1>
+            <p className="text-xs font-medium text-white/60 uppercase tracking-widest truncate max-w-full">{settings.siteName || 'Lucky Bazar'} • FAST RESULT • FREE GAME</p>
           </div>
         </div>
       </header>
@@ -979,37 +977,23 @@ function PublicWebsite() {
             {markets.map((m) => (
               <div
                 key={m._id}
-                className={`relative px-3 py-3 rounded-lg border transition-all duration-300 ${
+                className={`grid grid-cols-[auto_1fr_auto] items-center gap-2 px-3 py-3 rounded-lg border transition-all duration-300 ${
                   m.result
                     ? 'bg-amber-400 border-amber-500 shadow-lg shadow-amber-500/20'
                     : 'bg-white/[0.03] border-white/[0.12] hover:border-amber-500/20'
                 }`}
               >
-                <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <button
-                    onClick={() => openHistory(m._id, m.name, 'jodi')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
-                      m.result
-                        ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
-                        : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
-                    }`}
-                  >
-                    Jodi
-                  </button>
-                </div>
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <button
-                    onClick={() => openHistory(m._id, m.name, 'panel')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
-                      m.result
-                        ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
-                        : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
-                    }`}
-                  >
-                    Panel
-                  </button>
-                </div>
-                <div className="text-center px-10 sm:px-16">
+                <button
+                  onClick={() => openHistory(m._id, m.name, 'jodi')}
+                  className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
+                    m.result
+                      ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
+                      : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
+                  }`}
+                >
+                  Jodi
+                </button>
+                <div className="text-center">
                   <div className={`text-sm font-bold ${
                     m.result ? 'text-black' : 'text-amber-400/80'
                   }`}>
@@ -1029,6 +1013,16 @@ function PublicWebsite() {
                     </>
                   )}
                 </div>
+                <button
+                  onClick={() => openHistory(m._id, m.name, 'panel')}
+                  className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
+                    m.result
+                      ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
+                      : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
+                  }`}
+                >
+                  Panel
+                </button>
               </div>
             ))}
           </div>
@@ -1057,10 +1051,10 @@ function PublicWebsite() {
           return (
             <>
               <div className="max-w-7xl mx-auto px-4 mt-4">
-                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center justify-between gap-2 min-w-0">
-                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider truncate min-w-0">MAIN BOMBAY 36 BAZAR</span>
+                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 flex items-center gap-2 min-w-0 relative">
+                  <span className="flex-1 text-center text-amber-400 font-bold text-sm uppercase tracking-wider truncate min-w-0">MAIN BOMBAY 36 BAZAR</span>
                   <Link to={`/site/${slug}/main-bombay-chart`}
-                    className="shrink-0 bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition">Chart</Link>
+                    className="shrink-0 bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition absolute right-3">Chart</Link>
                 </div>
                 <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
                   <div className="text-4xl font-mono font-bold text-amber-400">{result}</div>
