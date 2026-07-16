@@ -27,23 +27,10 @@ function ForumDisplay({ forums }) {
       {sections.map(section => (
         <div key={section.key}>
           <Link to={`/site/${slug}/forum/${section.key}`} className="block">
-            <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center hover:border-amber-400/40 hover:bg-amber-500/[0.04] transition-all group">
+            <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-2 text-center hover:border-amber-400/40 hover:bg-amber-500/[0.04] transition-all group">
               <span className="text-amber-400 font-bold text-sm uppercase tracking-wider group-hover:text-amber-300 transition">{section.label}</span>
-              <span className="text-amber-500/50 text-[10px] ml-2 group-hover:text-amber-400/70 transition">View All →</span>
             </div>
           </Link>
-          <div className="space-y-2">
-            {/* {section.items.slice(0, 3).map(f => (
-              <div key={f._id} className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-3">
-                <div className="text-slate-400 text-xs font-mono leading-relaxed whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: f.content }} />
-              </div>
-            ))} */}
-            {section.items.length > 3 && (
-              <Link to={`/site/${slug}/forum/${section.key}`} className="block text-center text-amber-500/60 hover:text-amber-400 text-[11px] py-1 transition">
-                +{section.items.length - 3} more posts → View All
-              </Link>
-            )}
-          </div>
         </div>
       ))}
     </section>

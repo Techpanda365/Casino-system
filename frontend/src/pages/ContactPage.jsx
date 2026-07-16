@@ -216,7 +216,7 @@ function ContactPage() {
 
       <footer className="border-t border-white/[0.12] mt-2 py-3">
         <div className="max-w-7xl mx-auto px-4 text-center space-y-1">
-          <p className="text-amber-400 font-bold text-sm tracking-wider">LUCKYBAZAR</p>
+          <p className="text-amber-400 font-bold text-sm tracking-wider uppercase">{settings.siteName || 'LUCKYBAZAR'}</p>
           <p className="text-[10px] text-slate-500">All Rights Reserved&reg; (1998-2026)</p>
           <p className="text-[10px] text-slate-500">Contact (Astrologer)</p>
           <div className="pt-1">

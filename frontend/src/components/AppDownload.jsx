@@ -67,7 +67,7 @@ function AppDownload({ settings }) {
                 </svg>
               </a>
             )}
-            )}
+        
             {appUrl && (
               <div className={`${wp && tg ? 'col-span-2' : ''} mt-1`}>
                 <a href={appUrl} target="_blank" rel="noreferrer"

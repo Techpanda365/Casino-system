@@ -590,6 +590,7 @@ import AppDownload from '../components/AppDownload';
 import HistoryModal from '../components/HistoryModal';
 import PassHuaDisplay from '../components/PassHuaDisplay';
 import CasinoSpinner from '../components/CasinoSpinner';
+import { AuthProvider } from '../context/AuthContext';
 
 const API = 'http://localhost:5000/api/public';
 
@@ -609,6 +610,7 @@ function PublicWebsite() {
   const [refreshing, setRefreshing] = useState(false);
   const [historyModal, setHistoryModal] = useState(null);
   const [spinnerResult, setSpinnerResult] = useState(null);
+  const [mainBombayRecords, setMainBombayRecords] = useState([]);
   const [showVipModal, setShowVipModal] = useState(false);
   console.log(spinnerResult, "test");
 
@@ -643,6 +645,7 @@ function PublicWebsite() {
     axios.get(`${API}/banners/${slug}`).then((r) => setBanners(r.data)).catch(() => {});
     axios.get(`${API}/starline-charts/${slug}`).then((r) => setStarlineCharts(r.data)).catch(() => {});
     axios.get(`${API}/forums/${slug}`).then((r) => setForums(r.data)).catch(() => {});
+    axios.get(`${API}/main-bombay36/${slug}`).then((r) => setMainBombayRecords(r.data)).catch(() => {});
     fetchLive();
     const interval = setInterval(fetchLive, 30000);
     return () => clearInterval(interval);
@@ -762,6 +765,7 @@ function PublicWebsite() {
   }
 
   return (
+    <AuthProvider slug={slug}>
     <div
       className="min-h-screen pb-6"
       style={{
@@ -878,8 +882,8 @@ function PublicWebsite() {
           )}
           <p className="text-slate-400 text-xs mt-1">{settings.siteName || 'Lucky Bazar'} • Fast Result • Free Game</p>
           <div className="mt-3 pt-3 border-t border-white/[0.08] text-xs text-slate-400 leading-relaxed">
-            <p className="text-amber-400 font-semibold mb-1">Satta Matka LuckyBazar.com Kalyan Matka Result</p>
-            <p>Lucky Bazar is the No. 1 Matka Sites welcomes you full-heartedly. Here below you can find the perfect guess by the top guesser along with the Fast Matka Result too. Aaj Ka Satta Kalyan Fix Single Jodi free update here you find top Matka Market of India Kalyan Main Milan Rajdhani* *kalyan Matka Tips *fast Matka Result *kalyan Main Rajdhani Matka Chart *Matka Guessing by Lucky Bazar By App Best Matka Site By Lucky Bazar 91</p>
+            <p className="text-amber-400 font-semibold mb-1">Satta Matka {settings.siteName || 'LuckyBazar.com'} Kalyan Matka Result</p>
+            <p>{settings.siteName || 'Lucky Bazar'} is the No. 1 Matka Sites welcomes you full-heartedly. Here below you can find the perfect guess by the top guesser along with the Fast Matka Result too. Aaj Ka Satta Kalyan Fix Single Jodi free update here you find top Matka Market of India Kalyan Main Milan Rajdhani* *kalyan Matka Tips *fast Matka Result *kalyan Main Rajdhani Matka Chart *Matka Guessing by {settings.siteName || 'Lucky Bazar'} By App Best Matka Site By {settings.siteName || 'Lucky Bazar'} 91</p>
           </div>
         </div>
       </div>
@@ -953,7 +957,7 @@ function PublicWebsite() {
         <div className="bg-gradient-to-br from-amber-500/15 to-amber-500/5 border border-amber-500/15 rounded-2xl p-4 mb-4 text-center space-y-2">
           <p className="text-amber-400 font-bold text-sm">🌍 Matka Guessing का असली मंच यहाँ है</p>
           <p className="text-white font-semibold text-xs">🏆 Guess करो और बनो No.1</p>
-          <p className="text-slate-400 text-xs">📲 Download Lucky Bazar Forum App Today</p>
+          <p className="text-slate-400 text-xs">📲 Download {settings.siteName || 'Lucky Bazar'} Forum App Today</p>
           <a href={settings.appDownloadUrl || '#'} target="_blank" rel="noopener noreferrer"
             className="inline-block bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold text-xs px-6 py-2 rounded-lg hover:from-amber-500 hover:to-amber-400 transition shadow-lg shadow-amber-500/20"
           >
@@ -1008,7 +1012,7 @@ function PublicWebsite() {
                     </>
                   ) : (
                     <>
-                      <div className="text-sm font-mono text-slate-700 mt-0.5">---</div>
+                      <div className="text-sm font-mono text-slate-600 mt-0.5 italic">No result yet</div>
                       <div className="text-[11px] text-slate-600 mt-0.5">{m.openTime} — {m.closeTime}</div>
                     </>
                   )}
@@ -1044,10 +1048,7 @@ function PublicWebsite() {
           <StarlineChartsDisplay charts={starlineCharts} />
         </div>
 
-        {starlineCharts.length > 0 && (() => {
-          const bombayChart = starlineCharts.find(c => c.title?.toLowerCase().includes('main bombay'));
-          if (!bombayChart) return null;
-          const result = bombayChart.data?.[0]?.value || '130-4';
+        {mainBombayRecords.length > 0 && (() => {
           return (
             <>
               <div className="max-w-7xl mx-auto px-4 mt-4">
@@ -1055,10 +1056,6 @@ function PublicWebsite() {
                   <span className="flex-1 text-center text-amber-400 font-bold text-sm uppercase tracking-wider truncate min-w-0">MAIN BOMBAY 36 BAZAR</span>
                   <Link to={`/site/${slug}/main-bombay-chart`}
                     className="shrink-0 bg-black/60 text-white text-[11px] font-semibold px-2.5 py-1 rounded hover:bg-black/80 transition absolute right-3">Chart</Link>
-                </div>
-                <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
-                  <div className="text-4xl font-mono font-bold text-amber-400">{result}</div>
-                  <div className="text-slate-500 text-xs mt-1">Latest Result</div>
                 </div>
               </div>
               <div className="max-w-7xl mx-auto px-4 mt-4">
@@ -1068,9 +1065,11 @@ function PublicWebsite() {
           );
         })()}
 
+
+
         <div className="max-w-7xl mx-auto px-4 mt-4">
           <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
-            <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">LuckyBazar API — World's Fastest Satta Matka Result API</span>
+            <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">{settings.siteName || 'LuckyBazar'} API — World's Fastest Satta Matka Result API</span>
           </div>
           <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg p-4 text-center">
             <button
@@ -1111,7 +1110,7 @@ function PublicWebsite() {
             return (
               <>
                 <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
-                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Jodi List</span>
+                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Charts</span>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {sections.map(section => (
@@ -1193,11 +1192,18 @@ function PublicWebsite() {
                       </div>
                       {typeCharts.map((c, idx) => (
                         <div key={c._id} className={idx > 0 ? 'border-t border-white/[0.06]' : ''}>
-                          {c.marketName && (
+                          {/* {c.marketName && (
                             <div className="px-4 py-1 bg-white/[0.02]">
                               <span className="text-amber-400/70 text-[10px] font-semibold uppercase tracking-wider">{c.marketName}</span>
                             </div>
-                          )}
+                          )} */}
+                          {c.marketName && (
+  <div className="px-4 py-2 bg-white/[0.02] flex justify-center">
+    <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">
+      {c.marketName}
+    </span>
+  </div>
+)}
                           <div className="p-4">
                             <div className="text-slate-200 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
                           </div>
@@ -1219,11 +1225,11 @@ function PublicWebsite() {
               </div>
               <div className="flex flex-col items-center divide-y divide-white/[0.06]">
                 {markets.map(m => (
-                  <Link key={`j-${m._id}`} to={`/site/${slug}/chart/jodi-count/${encodeURIComponent(m.name)}`}
-                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
+                  <button key={`j-${m._id}`} onClick={() => openHistory(m._id, m.name, 'jodi')}
+                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition cursor-pointer"
                   >
                     {m.name} Chart
-                  </Link>
+                  </button>
                 ))}
               </div>
             </div>
@@ -1233,11 +1239,11 @@ function PublicWebsite() {
               </div>
               <div className="flex flex-col items-center divide-y divide-white/[0.06]">
                 {markets.map(m => (
-                  <Link key={`p-${m._id}`} to={`/site/${slug}/chart/penal-count/${encodeURIComponent(m.name)}`}
-                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition"
+                  <button key={`p-${m._id}`} onClick={() => openHistory(m._id, m.name, 'panel')}
+                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition cursor-pointer"
                   >
                     {m.name} Panel Chart
-                  </Link>
+                  </button>
                 ))}
               </div>
             </div>
@@ -1288,8 +1294,8 @@ function PublicWebsite() {
         </div>
         <div className="max-w-7xl mx-auto px-4 text-center space-y-2">
           <p className="text-[10px] text-slate-500 tracking-[2px] font-semibold uppercase">POWERED BY</p>
-          <p className="text-amber-400 font-bold text-sm tracking-wider">LUCKYBAZAR</p>
-          <p className="text-[10px] text-slate-500">© 2011 - 2026 luckybazar.com</p>
+          <p className="text-amber-400 font-bold text-sm tracking-wider uppercase">{settings.siteName || 'LUCKYBAZAR'}</p>
+          <p className="text-[10px] text-slate-500">© 2011 - 2026 {(settings.siteName || 'luckybazar').toLowerCase().replace(/\s+/g, '')}.com</p>
           <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400 flex-wrap">
             {settings.footerAboutEnabled !== false && (
               <Link to={`/site/${slug}/about`} className="hover:text-amber-400 transition">{settings.footerAboutLabel || 'About us'}</Link>
@@ -1324,6 +1330,8 @@ function PublicWebsite() {
           marketName={historyModal.marketName}
           type={historyModal.type}
           onClose={() => setHistoryModal(null)}
+          siteName={settings.siteName}
+          markets={markets}
         />
       )}
 
@@ -1348,6 +1356,7 @@ function PublicWebsite() {
       {/* VIP Modal */}
       {showVipModal && <VipModal />}
     </div>
+    </AuthProvider>
   );
 }
 
