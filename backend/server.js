@@ -98,7 +98,7 @@ app.use('/api/main-bombay', mainBombayRoutes);
 app.use('/api/user', userAuthRoutes);
 
 app.get('/', (req, res) => {
-  res.send('🚀 Server is running with MongoDB Atlas!');
+  res.send('🚀 Welcome to the Server! It is running with MongoDB Atlas!');
 });
 
 const PORT = process.env.PORT || 5000;
