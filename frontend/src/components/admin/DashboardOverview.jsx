@@ -176,7 +176,7 @@ function DashboardOverview({ token, siteSlug }) {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
         <a href="/admin/markets"
           className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-amber-500/30 hover:shadow-md transition-all group">
           <div className="p-2 bg-amber-500/20 rounded-lg group-hover:bg-amber-500/30 transition-colors">
@@ -232,7 +232,7 @@ function DashboardOverview({ token, siteSlug }) {
             <div className="text-xs text-slate-400">/site/{siteSlug || '...'}</div>
           </div>
         </a>
-      </div>
+      </div> */}
     </div>
   );
 }
