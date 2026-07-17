@@ -606,6 +606,7 @@ function PublicWebsite() {
   const [banners, setBanners] = useState([]);
   const [starlineCharts, setStarlineCharts] = useState([]);
   const [forums, setForums] = useState([]);
+  const [allChartsData, setAllChartsData] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [historyModal, setHistoryModal] = useState(null);
@@ -646,6 +647,7 @@ function PublicWebsite() {
     axios.get(`${API}/starline-charts/${slug}`).then((r) => setStarlineCharts(r.data)).catch(() => {});
     axios.get(`${API}/forums/${slug}`).then((r) => setForums(r.data)).catch(() => {});
     axios.get(`${API}/main-bombay36/${slug}`).then((r) => setMainBombayRecords(r.data)).catch(() => {});
+    axios.get(`${API}/all-charts/${slug}`).then((r) => setAllChartsData(r.data)).catch(() => {});
     fetchLive();
     const interval = setInterval(fetchLive, 30000);
     return () => clearInterval(interval);
@@ -1133,78 +1135,239 @@ function PublicWebsite() {
             </div>
           )}
 
-          {charts.length > 0 && (() => {
-            const WEEKLY_TYPES = ['weekly-patti', 'weekly-open-close', 'weekly-jodi', 'card-list-220'];
-            const WEEKLY_LABELS = {
-              'weekly-patti': 'Weekly Patti/Penal Chart',
-              'weekly-open-close': 'Weekly Open/Close Line',
-              'weekly-jodi': 'Weekly Jodi Chart',
-              'card-list-220': 'All 220 Card List'
+         {/* Weekly Charts - Premium Design */}
+{(charts.length > 0 || allChartsData.length > 0) && (() => {
+  const WEEKLY_TYPES = ['weekly-patti', 'weekly-open-close', 'weekly-jodi', 'card-list-220'];
+  const WEEKLY_LABELS = {
+    'weekly-patti': 'Weekly Patti/Penal Chart',
+    'weekly-open-close': 'Weekly Open/Close Line',
+    'weekly-jodi': 'Weekly Jodi Chart',
+    'card-list-220': 'All 220 Card List'
+  };
+  const WEEKLY_HEADERS = {
+    'weekly-patti': '📊 PATTI/PENAL CHART',
+    'weekly-open-close': '📈 OPEN/CLOSE LINE',
+    'weekly-jodi': '🔢 JODI CHART',
+    'card-list-220': '🃏 ALL 220 CARD LIST'
+  };
+
+  const today = new Date();
+  const getMonday = (d) => { 
+    const dt = new Date(d); 
+    const day = dt.getDay(); 
+    const diff = dt.getDate() - day + (day === 0 ? -6 : 1); 
+    dt.setDate(diff); 
+    return dt; 
+  };
+  const mon = getMonday(today);
+  const sun = new Date(mon); 
+  sun.setDate(sun.getDate() + 6);
+  const fmt = (d) => d.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-');
+  const dateRange = `${fmt(mon)} To ${fmt(sun)}`;
+
+  const hasAdminCharts = charts.length > 0;
+
+  return (
+    <div className="space-y-4 mt-4">
+      {/* WEEKLY PATTI - Dynamic + Admin Charts combined under one header */}
+      {(hasAdminCharts && charts.some(c => c.type === 'weekly-patti')) && (() => {
+        const adminPattiCharts = charts.filter(c => c.type === 'weekly-patti');
+        const allMarketNames = adminPattiCharts.filter(c => c.marketName).map(c => c.marketName);
+        return (
+        <div className="bg-white/[0.03] border border-white/[0.12] rounded-2xl overflow-hidden shadow-xl shadow-amber-500/5">
+          <div 
+            className="px-4 py-3 text-center border-b border-white/[0.08]"
+            style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' }}
+          >
+            <span className="text-black font-extrabold text-sm uppercase tracking-wider">
+              {WEEKLY_HEADERS['weekly-patti']}
+            </span>
+            <span className="text-black/70 font-semibold text-xs block mt-0.5">
+              {WEEKLY_LABELS['weekly-patti']} From {dateRange}
+            </span>
+            <span className="text-black/50 text-[10px] block mt-0.5">
+              For {allMarketNames.join(', ')}
+            </span>
+          </div>
+
+          {/* Admin-created weekly-patti charts */}
+          {adminPattiCharts.map((c, idx) => {
+            const parseWeeklyData = (html) => {
+              const temp = document.createElement('div');
+              temp.innerHTML = html;
+              const text = temp.textContent || '';
+              const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+              const result = [];
+              let currentDay = '';
+              for (const line of lines) {
+                const dayMatch = line.match(/^(सोम|मंगल|बुध|गुरु|शनि|रवि|रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्र|शनिवार)/i);
+                if (dayMatch) {
+                  currentDay = dayMatch[1];
+                  const numbers = line.replace(/^(सोम|मंगल|बुध|गुरु|शनि|रवि|रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्र|शनिवार)\s*/, '').trim().split(/\s+/);
+                  const cells = [];
+                  for (let i = 0; i < numbers.length; i += 3) {
+                    if (i + 2 < numbers.length) cells.push({ ank: numbers[i], patti: numbers[i+1], panel: numbers[i+2] });
+                  }
+                  if (cells.length > 0) result.push({ day: currentDay, cells });
+                } else if (currentDay && line.match(/^\d/)) {
+                  const last = result[result.length - 1];
+                  if (last) {
+                    const numbers = line.trim().split(/\s+/);
+                    for (let i = 0; i < numbers.length; i += 3) {
+                      if (i + 2 < numbers.length) last.cells.push({ ank: numbers[i], patti: numbers[i+1], panel: numbers[i+2] });
+                    }
+                  }
+                }
+              }
+              return result;
             };
-            const WEEKLY_DESCRIPTIONS = {
-              'weekly-patti': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
-              'weekly-open-close': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
-              'weekly-jodi': 'For Kalyan, Milan, Kalyan Night, Rajdhani, Time, Main Bazar, Mumbai Royal Night, Kalyan Morning',
-              'card-list-220': ''
-            };
-            const WEEKLY_HEADERS = {
-              'weekly-patti': '📊 Patti/Penal Chart',
-              'weekly-open-close': '📈 Open/Close Line',
-              'weekly-jodi': '🔢 Jodi Chart',
-              'card-list-220': '🃏 All 220 Card List'
-            };
-            const items = WEEKLY_TYPES.filter(t => charts.some(c => c.type === t));
-            if (items.length === 0) return null;
-            
-            const today = new Date();
-            const getMonday = (d) => { const dt = new Date(d); const day = dt.getDay(); const diff = dt.getDate() - day + (day === 0 ? -6 : 1); dt.setDate(diff); return dt; };
-            const mon = getMonday(today);
-            const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
-            const fmt = (d) => d.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-');
-            const dateRange = `${fmt(mon)} To ${fmt(sun)}`;
-            
+            const parsedData = parseWeeklyData(c.content);
             return (
-              <div className="space-y-4 mt-4">
-                {items.map(type => {
-                  const typeCharts = charts.filter(c => c.type === type);
+              <div key={c._id} className={idx > 0 ? 'border-t border-white/[0.06]' : ''}>
+                {c.marketName && (
+                  <div className="px-4 py-2 bg-white/[0.02] flex justify-center border-b border-white/[0.04]">
+                    <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">{c.marketName}</span>
+                  </div>
+                )}
+                <div className="p-3 overflow-x-auto">
+                  {parsedData.length > 0 ? (
+                    <table className="w-full border-collapse text-center text-xs">
+                      <tbody>
+                        {parsedData.map((row, ri) => (
+                          <tr key={ri} className={ri % 2 === 0 ? 'bg-white/[0.02]' : ''}>
+                            <td className="px-2 py-2 font-bold text-amber-400/80 whitespace-nowrap border-r border-white/[0.06]">{row.day}</td>
+                            {row.cells.map((cell, ci) => (
+                              <td key={ci} className="px-1 py-1 border-r border-white/[0.04] last:border-r-0">
+                                <div className="flex flex-col items-center gap-0.5 min-w-[40px]">
+                                  <span className="font-bold text-white text-xs">{cell.ank}</span>
+                                  <span className="text-amber-400/80 text-[10px] font-mono">{cell.patti}</span>
+                                  <span className="text-slate-400/60 text-[9px] font-mono">{cell.panel}</span>
+                                </div>
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div className="text-slate-200 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center"
+                      dangerouslySetInnerHTML={{ __html: c.content }}
+                    />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+      })()}
+
+      {/* Admin-created weekly charts for other types */}
+      {hasAdminCharts && charts.filter(c => c.type !== 'weekly-patti').length > 0 && (
+        <>
+          {WEEKLY_TYPES.filter(t => t !== 'weekly-patti' && charts.some(c => c.type === t)).map(type => {
+            const typeCharts = charts.filter(c => c.type === type);
+            return (
+              <div key={type} className="bg-white/[0.03] border border-white/[0.12] rounded-2xl overflow-hidden shadow-xl shadow-amber-500/5">
+                <div 
+                  className="px-4 py-3 text-center border-b border-white/[0.08]"
+                  style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' }}
+                >
+                  <span className="text-black font-extrabold text-sm uppercase tracking-wider">
+                    {WEEKLY_HEADERS[type] || WEEKLY_LABELS[type]}
+                  </span>
+                  <span className="text-black/70 font-semibold text-xs block mt-0.5">
+                    {WEEKLY_LABELS[type]} From {dateRange}
+                  </span>
+                </div>
+
+                {typeCharts.map((c, idx) => {
+                  const parseWeeklyData = (html) => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = html;
+                    const text = temp.textContent || '';
+                    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                    
+                    const result = [];
+                    let currentDay = '';
+                    
+                    for (const line of lines) {
+                      const dayMatch = line.match(/^(सोम|मंगल|बुध|गुरु|शनि|रवि|रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्र|शनिवार)/i);
+                      if (dayMatch) {
+                        currentDay = dayMatch[1];
+                        const numbers = line.replace(/^(सोम|मंगल|बुध|गुरु|शनि|रवि|रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्र|शनिवार)\s*/, '').trim().split(/\s+/);
+                        const cells = [];
+                        for (let i = 0; i < numbers.length; i += 3) {
+                          if (i + 2 < numbers.length) {
+                            cells.push({ ank: numbers[i], patti: numbers[i+1], panel: numbers[i+2] });
+                          }
+                        }
+                        if (cells.length > 0) result.push({ day: currentDay, cells });
+                      } else if (currentDay && line.match(/^\d/)) {
+                        const last = result[result.length - 1];
+                        if (last) {
+                          const numbers = line.trim().split(/\s+/);
+                          for (let i = 0; i < numbers.length; i += 3) {
+                            if (i + 2 < numbers.length) {
+                              last.cells.push({ ank: numbers[i], patti: numbers[i+1], panel: numbers[i+2] });
+                            }
+                          }
+                        }
+                      }
+                    }
+                    return result;
+                  };
+
+                  const parsedData = parseWeeklyData(c.content);
+
                   return (
-                    <div key={type} className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden shadow-lg">
-                      <div className="bg-gradient-to-r from-amber-600/30 to-amber-500/10 border-b border-amber-500/20 px-4 py-3 text-center">
-                        <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">{WEEKLY_HEADERS[type] || WEEKLY_LABELS[type]}</span>
-                        <span className="text-white/90 font-semibold text-xs block mt-0.5">{WEEKLY_LABELS[type]} From {dateRange}</span>
-                        {WEEKLY_DESCRIPTIONS[type] && (
-                          <span className="text-white/50 text-[10px] block mt-0.5">{WEEKLY_DESCRIPTIONS[type]}</span>
+                    <div key={c._id} className={idx > 0 ? 'border-t border-white/[0.06]' : ''}>
+                      {c.marketName && (
+                        <div className="px-4 py-2 bg-white/[0.02] flex justify-center border-b border-white/[0.04]">
+                          <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">{c.marketName}</span>
+                        </div>
+                      )}
+                      <div className="p-3 overflow-x-auto">
+                        {parsedData.length > 0 ? (
+                          <table className="w-full border-collapse text-center text-xs">
+                            <tbody>
+                              {parsedData.map((row, ri) => (
+                                <tr key={ri} className={ri % 2 === 0 ? 'bg-white/[0.02]' : ''}>
+                                  <td className="px-2 py-2 font-bold text-amber-400/80 whitespace-nowrap border-r border-white/[0.06]">{row.day}</td>
+                                  {row.cells.map((cell, ci) => (
+                                    <td key={ci} className="px-1 py-1 border-r border-white/[0.04] last:border-r-0">
+                                      <div className="flex flex-col items-center gap-0.5 min-w-[40px]">
+                                        <span className="font-bold text-white text-xs">{cell.ank}</span>
+                                        <span className="text-amber-400/80 text-[10px] font-mono">{cell.patti}</span>
+                                        <span className="text-slate-400/60 text-[9px] font-mono">{cell.panel}</span>
+                                      </div>
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        ) : (
+                          <div className="text-slate-200 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" 
+                            dangerouslySetInnerHTML={{ __html: c.content }} 
+                          />
                         )}
                       </div>
-                      {typeCharts.map((c, idx) => (
-                        <div key={c._id} className={idx > 0 ? 'border-t border-white/[0.06]' : ''}>
-                          {/* {c.marketName && (
-                            <div className="px-4 py-1 bg-white/[0.02]">
-                              <span className="text-amber-400/70 text-[10px] font-semibold uppercase tracking-wider">{c.marketName}</span>
-                            </div>
-                          )} */}
-                          {c.marketName && (
-  <div className="px-4 py-2 bg-white/[0.02] flex justify-center">
-    <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">
-      {c.marketName}
-    </span>
-  </div>
-)}
-                          <div className="p-4">
-                            <div className="text-slate-200 text-xs font-mono leading-relaxed whitespace-pre-wrap text-center" dangerouslySetInnerHTML={{ __html: c.content }} />
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   );
                 })}
               </div>
             );
-          })()}
+          })}
+        </>
+      )}
+    </div>
+  );
+})()}
         </div>
 
         {markets.length > 0 && (
-          <div className="space-y-4">
+          <div className="space-y-4 mt-6">
             <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
               <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
                 <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">SATTA MATKA JODI CHART</h3>

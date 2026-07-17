@@ -394,6 +394,9 @@ function JodiChart({ weeks }) {
    PANEL CHART — dpboss style (1 column per day, vertical Open/Jodi/Close)
    Each row: date label + 7 days with Open|Jodi|Close stacked
 ───────────────────────────────────────────── */
+// ─── dpboss‑style Panel Chart ─────────────────
+// Each cell = 3 columns: OpenAnk (top) + Jodi (large) + CloseAnk (bottom)
+// with OpenPatti stacked left, ClosePatti stacked right
 function PanelChart({ weeks }) {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   return (
@@ -417,24 +420,41 @@ function PanelChart({ weeks }) {
           });
           return (
             <tr key={i} className={`border-b border-white/[0.05] ${i % 2 === 0 ? 'bg-white/[0.02]' : ''}`}>
-              <td className="py-2 px-2 text-slate-500 text-[10px] font-mono border-r border-white/[0.07] leading-tight align-middle">
-                {week.label}
+              <td className="py-1.5 px-1 border-r border-white/[0.07] align-middle">
+                <div className="flex justify-center items-center">
+                  <div className="flex flex-col leading-[1.2]">
+                    <span className="italic font-semibold text-slate-400 text-[9px] text-center leading-tight">{week.label}</span>
+                  </div>
+                </div>
               </td>
               {[1,2,3,4,5,6,0].map((dow) => {
                 const day = dayMap[dow];
                 return (
-                  <td key={dow} className="py-1.5 px-1 border-r border-white/[0.07] last:border-r-0">
+                  <td key={dow} className="p-0 border-r border-white/[0.07] last:border-r-0">
                     {day ? (
-                      <div className="font-mono leading-tight">
-                        <div className="text-green-400 font-bold tracking-wider text-[11px]">{formatPatti(day.openPatti)}</div>
-                        <div className="text-amber-400 font-bold text-sm">{day.jodi}</div>
-                        <div className="text-red-400 font-bold tracking-wider text-[11px]">{formatPatti(day.closePatti)}</div>
+                      <div className="flex justify-between items-center px-0.5 py-0.5 font-mono"
+                        style={{ textShadow: '1px 1px 0px rgba(245,158,11,0.3)' }}
+                      >
+                        {/* Open patti — 3 digits stacked */}
+                        <div className="flex flex-col leading-[1.0] items-center">
+                          {String(day.openPatti || '***').split('').map((d, idx) => (
+                            <span key={idx} className="italic font-semibold text-green-400 text-[9px] leading-tight">{d}</span>
+                          ))}
+                        </div>
+                        {/* Jodi — large center */}
+                        <div className="flex flex-col items-center leading-tight">
+                          <span className="italic font-bold text-amber-400 text-lg leading-tight">{day.jodi || '**'}</span>
+                        </div>
+                        {/* Close patti — 3 digits stacked */}
+                        <div className="flex flex-col leading-[1.0] items-center">
+                          {String(day.closePatti || '***').split('').map((d, idx) => (
+                            <span key={idx} className="italic font-semibold text-red-400 text-[9px] leading-tight">{d}</span>
+                          ))}
+                        </div>
                       </div>
                     ) : (
-                      <div className="text-slate-700 font-mono leading-tight">
-                        <div className="text-[11px]">* * *</div>
-                        <div className="text-[10px]">**</div>
-                        <div className="text-[11px]">* * *</div>
+                      <div className="flex justify-center items-center py-1 font-mono">
+                        <span className="text-slate-700 text-xs">✪</span>
                       </div>
                     )}
                   </td>
@@ -446,12 +466,6 @@ function PanelChart({ weeks }) {
       </tbody>
     </table>
   );
-}
-
-// Format patti as "1 2 3" spaced like reference site
-function formatPatti(patti) {
-  if (!patti || patti === '* * *' || patti === '---') return '* * *';
-  return patti.split('').join(' ');
 }
 
 export default HistoryModal;

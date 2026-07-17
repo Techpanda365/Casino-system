@@ -234,7 +234,7 @@ function DashboardOverview({ token, siteSlug }) {
         </a>
       </div> */}
     </div>
-  );
+);
 }
 
 export default DashboardOverview;

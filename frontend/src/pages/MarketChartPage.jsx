@@ -82,15 +82,11 @@ function MarketChartPage() {
                       <td key={dow} className="px-1 py-1 border border-white/[0.08] text-center">
                         {day ? (
                           <div className="font-mono leading-tight">
-                            <div className="text-green-400 font-bold tracking-wider text-[11px]">{formatPatti(day.openPatti)}</div>
                             <div className="text-amber-400 font-bold text-sm">{day.jodi}</div>
-                            <div className="text-red-400 font-bold tracking-wider text-[11px]">{formatPatti(day.closePatti)}</div>
                           </div>
                         ) : (
                           <div className="text-slate-700 font-mono leading-tight">
-                            <div className="text-[11px]">* * *</div>
                             <div className="text-[10px]">**</div>
-                            <div className="text-[11px]">* * *</div>
                           </div>
                         )}
                       </td>

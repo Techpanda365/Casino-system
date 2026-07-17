@@ -234,12 +234,6 @@ router.get("/history/:slug/:marketId", async (req, res) => {
     const type = req.query.type || "jodi"; 
     const limit = parseInt(req.query.limit) || 2000;
 
-    const { start, end } = getTodayRange();
-    const todayResult = await Result.findOne({
-      market: req.params.marketId,
-      date: { $gte: start, $lte: end }
-    }).select("openPatti jodi closePatti");
-
     const results = await Result.find({ market: req.params.marketId })
       .sort({ date: -1 })
       .limit(limit)
@@ -247,10 +241,11 @@ router.get("/history/:slug/:marketId", async (req, res) => {
     results.reverse();
     console.log(results,"results")
 
-    const currentResult = todayResult ? {
-      openPatti: todayResult.openPatti,
-      jodi: todayResult.jodi,
-      closePatti: todayResult.closePatti
+    const latestResult = results.length > 0 ? results[results.length - 1] : null;
+    const currentResult = latestResult ? {
+      openPatti: latestResult.openPatti,
+      jodi: latestResult.jodi,
+      closePatti: latestResult.closePatti
     } : null;
 
     if (type === "jodi") {
