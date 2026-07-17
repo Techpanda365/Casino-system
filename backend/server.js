@@ -6,7 +6,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 app.use(cors({
