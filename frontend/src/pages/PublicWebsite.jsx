@@ -972,17 +972,19 @@ function PublicWebsite() {
           <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">WORLD ME SABSE FAST SATTA MATKA RESULT</span>
         </div>
 
-        {markets.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-slate-600 text-sm">No markets added yet.</p>
-          </div>
-        ) : (
+        {(() => {
+          // Merge live results into markets
+          const liveMap = {};
+          liveResults.forEach(lr => { liveMap[lr.marketId] = lr; });
+          const merged = markets.map(m => ({ ...m, result: liveMap[m._id] || null }));
+          if (merged.length === 0) return <div className="text-center py-8"><p className="text-slate-600 text-sm">No markets added yet.</p></div>;
+          return (
           <div className="space-y-2">
-            {markets.map((m) => (
+            {merged.map((m) => (
               <div
                 key={m._id}
                 className={`grid grid-cols-[auto_1fr_auto] items-center gap-2 px-3 py-3 rounded-lg border transition-all duration-300 ${
-                  m.result
+                  m.result?.hasResult
                     ? 'bg-amber-400 border-amber-500 shadow-lg shadow-amber-500/20'
                     : 'bg-white/[0.03] border-white/[0.12] hover:border-amber-500/20'
                 }`}
@@ -990,7 +992,7 @@ function PublicWebsite() {
                 <button
                   onClick={() => openHistory(m._id, m.name, 'jodi')}
                   className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
-                    m.result
+                    m.result?.hasResult
                       ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
                       : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
                   }`}
@@ -999,14 +1001,14 @@ function PublicWebsite() {
                 </button>
                 <div className="text-center">
                   <div className={`text-sm font-bold ${
-                    m.result ? 'text-black' : 'text-amber-400/80'
+                    m.result?.hasResult ? 'text-black' : 'text-amber-400/80'
                   }`}>
                     {m.name}
                   </div>
-                  {m.result ? (
+                  {m.result?.hasResult ? (
                     <>
                       <div className="text-sm sm:text-lg font-mono font-bold tracking-wider text-black mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
-                        {m.result.openPatti}<span className="text-black/40">-</span>{m.result.jodi}<span className="text-black/40">-</span>{m.result.closePatti}
+                        {m.result.openPatti}{m.result.jodi ? <span className="text-black/40">-</span> : ''}{m.result.jodi}{m.result.closePatti ? <span className="text-black/40">-</span> : ''}{m.result.closePatti}
                       </div>
                       <div className="text-[11px] text-black/60 mt-0.5">{m.openTime} — {m.closeTime}</div>
                     </>
@@ -1020,7 +1022,7 @@ function PublicWebsite() {
                 <button
                   onClick={() => openHistory(m._id, m.name, 'panel')}
                   className={`px-2.5 py-1 rounded text-[11px] font-bold transition border ${
-                    m.result
+                    m.result?.hasResult
                       ? 'bg-black/10 text-black/70 hover:bg-black/20 border-black/20'
                       : 'bg-white/[0.05] text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 border-white/[0.12]'
                   }`}
@@ -1030,7 +1032,8 @@ function PublicWebsite() {
               </div>
             ))}
           </div>
-        )}
+          );
+        })()}
 
         {/* Sponsored Ad Game */}
         <div className="border rounded-lg px-3 py-3 mb-3 text-center" style={{ backgroundColor: 'var(--theme-card-bg)', borderColor: 'var(--theme-primary)' }}>
@@ -1091,39 +1094,22 @@ function PublicWebsite() {
           </div>
 
           <div className="mt-6">
-          {charts.length > 0 && (() => {
-            const CHART_TYPES = ['weekly', 'weekly-patti', 'weekly-open-close', 'weekly-jodi', 'cardlist', 'card-list-220', 'jodi-count', 'jodi-family', 'penal-count', 'penal-total'];
-            const CHART_LABELS = {
-              'weekly': 'Weekly Charts',
-              'weekly-patti': 'Weekly Patti/Penal Chart',
-              'weekly-open-close': 'Weekly Open/Close Line',
-              'weekly-jodi': 'Weekly Jodi Chart',
-              'cardlist': 'Card Lists',
-              'card-list-220': 'All 220 Card List',
-              'jodi-count': 'Matka Jodi Count Chart',
-              'jodi-family': 'Matka Jodi Family Chart',
-              'penal-count': 'Penal Count Chart',
-              'penal-total': 'Penal Total Chart'
-            };
-            const sections = CHART_TYPES.map(t => ({ type: t, label: CHART_LABELS[t] || t, items: charts.filter(c => c.type === t) })).filter(s => s.items.length > 0);
-            if (sections.length === 0) return null;
-            return (
-              <>
-                <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/20 rounded-lg px-3 py-1.5 mb-2 text-center">
-                  <span className="text-amber-400 font-bold text-sm uppercase tracking-wider">Charts</span>
-                </div>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {sections.map(section => (
-                    <Link key={section.type} to={`/site/${slug}/chart/${section.type}`}
-                      className="bg-white/[0.03] border border-white/[0.12] rounded-lg px-4 py-2 text-center hover:border-amber-500/40 hover:bg-amber-500/[0.04] transition group min-w-[140px] sm:min-w-[180px]"
-                    >
-                      <div className="text-amber-400 font-semibold text-xs uppercase tracking-wider group-hover:text-amber-300 transition">{section.label}</div>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            );
-          })()}
+          {markets.length > 0 && (
+            <div className="bg-white/[0.03] border border-white/[0.12] rounded-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500/20 to-amber-500/5 border-b border-amber-500/20 px-3 py-2 text-center">
+                <h3 className="text-amber-400 font-bold text-sm uppercase tracking-widest">Jodi List</h3>
+              </div>
+              <div className="flex flex-col items-center divide-y divide-white/[0.06]">
+                {markets.map(m => (
+                  <button key={`jl-${m._id}`} onClick={() => openHistory(m._id, m.name, 'jodi')}
+                    className="w-full text-center px-3 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-white/[0.03] transition cursor-pointer"
+                  >
+                    {m.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           </div>
 
           {(() => {

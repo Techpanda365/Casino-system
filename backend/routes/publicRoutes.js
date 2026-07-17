@@ -111,21 +111,20 @@ router.get("/settings/:slug", async (req, res) => {
 router.get("/live/:slug", async (req, res) => {
   try {
     const admin = await Admin.findOne({ siteSlug: req.params.slug });
-    console.log(admin,"admin")
     if (!admin) return res.status(404).json({ msg: "Site not found" });
 
-    const { start, end } = getTodayRange();
-
     const markets = await Market.find({ adminId: admin._id, active: true }).sort({ displayOrder: 1 });
-    console.log(markets,"markets")
-    const results = await Result.find({
-      market: { $in: markets.map((m) => m._id) },
-      date: { $gte: start, $lte: end }
-    });
-    console.log(results,"results")
+
+    // Get all results sorted newest first, then pick latest per market
+    const allResults = await Result.find({
+      market: { $in: markets.map((m) => m._id) }
+    }).sort({ date: -1, _id: -1 });
 
     const resultMap = {};
-    results.forEach((r) => { resultMap[r.market.toString()] = r; });
+    allResults.forEach((r) => {
+      const key = r.market.toString();
+      if (!resultMap[key]) resultMap[key] = r;
+    });
 
     const live = markets.map((m) => {
       const r = resultMap[m._id.toString()];
@@ -142,7 +141,6 @@ router.get("/live/:slug", async (req, res) => {
       };
     });
 
-    console.log(live,"live")
     return res.json(live);
   } catch (error) {
     return res.status(500).json({ msg: "Server error", error: error.message });
